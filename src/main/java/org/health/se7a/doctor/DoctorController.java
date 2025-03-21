@@ -1,0 +1,52 @@
+package org.health.se7a.doctor;
+
+import org.health.se7a.common.XppResponseEntity;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/doctors")
+@RequiredArgsConstructor
+public class DoctorController {
+
+    private final DoctorService doctorService;
+
+    @GetMapping
+    @PreAuthorize("@authorizationService.loggedInUserIsAdmin()")
+    public XppResponseEntity<Page<DoctorDTO>> getAllDoctors(Pageable pageable) {
+        return XppResponseEntity.map(doctorService.getAllDoctors(pageable));
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("@authorizationService.userCanViewDoctorDetails(#id)")
+    public XppResponseEntity<DoctorDTO> getDoctorById(@PathVariable Long id) {
+        return XppResponseEntity.map(doctorService.getDoctorById(id));
+    }
+
+    @PostMapping
+    @PreAuthorize("@authorizationService.loggedInUserIsAdmin()")
+    public XppResponseEntity<Boolean> createDoctor(@RequestBody @Valid DoctorDTO doctorDTO) {
+        Boolean createdDoctor = doctorService.createDoctor(doctorDTO);
+        return XppResponseEntity.map(createdDoctor);
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("@authorizationService.userCanViewDoctorDetails(#id)")
+    public XppResponseEntity<Boolean> updateDoctor(
+            @PathVariable Long id,
+            @RequestBody @Valid DoctorDTO doctorDTO) {
+        Boolean updatedDoctor = doctorService.updateDoctor(id, doctorDTO);
+        return XppResponseEntity.map(updatedDoctor);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("@authorizationService.userCanViewDoctorDetails(#id)")
+    public XppResponseEntity<Boolean> deleteDoctor(@PathVariable Long id) {
+        Boolean deletedDoctor = doctorService.deleteDoctor(id);
+        return XppResponseEntity.map(deletedDoctor);
+    }
+}
