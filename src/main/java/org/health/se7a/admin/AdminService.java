@@ -39,8 +39,8 @@ public class AdminService {
                     .name("Admin")
                     .telNumber("0599078888")
                     .accountStatus(AccountStatus.ACTIVE)
-
                     .build();
+
             adminRepository.save(defaultAdmin);
             entityService.addUserLoginInfo(defaultAdmin.getTelNumber(), LoginType.ADMIN);
 
@@ -49,6 +49,7 @@ public class AdminService {
             log.info("Admin already exists. Skipping creation.");
         }
     }
+
 
     public void setAccountStatus(String phoneNumber, LoginType loginType, AccountStatus accountStatus) {
         UserRepository repository = loginDetailsService.getRepositoryByLoginType(loginType);

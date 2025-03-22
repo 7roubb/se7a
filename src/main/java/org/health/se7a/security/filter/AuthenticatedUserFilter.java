@@ -53,6 +53,6 @@ public class AuthenticatedUserFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return  AUTHENTICATION_URLS.contains(request.getContextPath());
+        return  AUTHENTICATION_URLS.contains(request.getContextPath()) ;
     }
 }

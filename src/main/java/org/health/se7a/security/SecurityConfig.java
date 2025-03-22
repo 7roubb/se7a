@@ -30,6 +30,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class SecurityConfig {
+    private final InMemoryAuthConfig inMemoryAuthConfig;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
@@ -40,9 +41,11 @@ public class SecurityConfig {
 
         return http.csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/login", "/register/**")
+                        .requestMatchers("/login", "/register/**", "/swagger-ui/**", "/v2/api-docs/**", "/swagger-resources/**", "/webjars/**","/swagger-ui.html","/favicon.ico")
                         .permitAll()
-                        .anyRequest().authenticated())
+                        .anyRequest().authenticated()
+                )
+
                 .exceptionHandling(e -> e.accessDeniedHandler(new XppAccessDeniedHandler()))
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -50,11 +53,14 @@ public class SecurityConfig {
                 .addFilterAfter(authenticatedUserFilter, LoginAuthenticationFilter.class)
                 .addFilterAt(verifyCodeAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(resendCodeAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+
                 .build();
     }
 
     @Bean
     public AuthenticationManager authenticationManager(List<AuthenticationProvider> providers) {
+        AuthenticationProvider inMemoryProvider = inMemoryAuthConfig.authenticationProvider();
+        providers.add(inMemoryProvider);
         return new ProviderManager(providers);
     }
 

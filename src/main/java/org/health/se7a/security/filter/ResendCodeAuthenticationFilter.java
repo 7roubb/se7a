@@ -21,8 +21,10 @@ public class ResendCodeAuthenticationFilter extends AbstractAuthenticationProces
         super(RESEND_URL, authenticationManager);
     }
 
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
+
         String token = extractJwtTokenFromRequest(request);
         if (!validateTempToken(token))
             throw invalidToken();
@@ -31,6 +33,8 @@ public class ResendCodeAuthenticationFilter extends AbstractAuthenticationProces
                 .userId(extractSubjectFromToken(token))
                 .loginType(extractLoginTypeFromJwt(token))
                 .build();
+
         return getAuthenticationManager().authenticate(resendCodeAuthenticationToken);
     }
+
 }

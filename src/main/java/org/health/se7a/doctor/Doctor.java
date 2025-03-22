@@ -10,30 +10,16 @@ import org.health.se7a.common.BaseEntity;
 import org.health.se7a.security.model.AccountStatus;
 import org.health.se7a.security.model.LoginType;
 import org.health.se7a.security.model.LoginUser;
+import org.health.se7a.users.User;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder(toBuilder = true)
+@SuperBuilder
 @Entity
-@Table(
-        indexes = {
-                @Index(name = "idx_doctor_name", columnList = "name"),
-                @Index(name = "idx_doctor_telNumber", columnList = "telNumber"),
-                @Index(name = "idx_doctor_licenceNumber", columnList = "licenceNumber")
-        }
-)
-public class Doctor extends BaseEntity implements LoginUser {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String name;
-
-    private String telNumber;
-
+public class Doctor extends User implements LoginUser {
     private String specialty;
 
     private String licenceNumber;
@@ -43,7 +29,4 @@ public class Doctor extends BaseEntity implements LoginUser {
         return LoginType.DOCTOR;
     }
 
-
-    @Enumerated(EnumType.STRING)
-    private AccountStatus accountStatus = AccountStatus.ACTIVE;
 }

@@ -29,6 +29,7 @@ public class VerifyCodeAuthenticationFilter extends AbstractAuthenticationProces
         if (!validateTempToken(jwtToken)) {
             throw invalidToken();
         }
+
         VerifyCodeRequest verifyCodeRequest = HttpObjectParser.parseInputStream(request.getInputStream(), VerifyCodeRequest.class);
         VerifyAuthenticationToken verifyAuthenticationToken = VerifyAuthenticationToken.builder()
                 .code(verifyCodeRequest.getCode())
@@ -37,5 +38,6 @@ public class VerifyCodeAuthenticationFilter extends AbstractAuthenticationProces
                 .build();
         return getAuthenticationManager().authenticate(verifyAuthenticationToken);
     }
+
 
 }
