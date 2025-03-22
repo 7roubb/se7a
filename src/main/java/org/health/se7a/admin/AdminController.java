@@ -18,7 +18,7 @@ public class AdminController {
     @PostMapping("/account/status")
     @PreAuthorize("@authorizationService.loggedInUserIsAdmin()")
     public XppResponseEntity<Void> getCarByPlateNumber(@RequestParam AccountStatus st, @RequestBody LoginRequest user) {
-       adminService.setAccountStatus(user.getPhoneNumber(),user.getType(),st);
+       adminService.setAccountStatus(user.getPhoneNumber(),null,st);
         return XppResponseEntity.map(HttpStatus.OK);
     }
 }

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.health.se7a.doctor.Doctor;
 import org.health.se7a.doctor.DoctorRepository;
+import org.health.se7a.entity.EntityService;
 import org.health.se7a.exception.XppException;
 import org.health.se7a.nurse.Nurse;
 import org.health.se7a.nurse.NurseRepository;
@@ -28,6 +29,7 @@ public class AdminService {
 
     private final AdminRepository adminRepository;
     private final LoginDetailsServiceImpl loginDetailsService;
+    private final EntityService entityService;
 
     @PostConstruct
     @Transactional
@@ -36,9 +38,12 @@ public class AdminService {
             Admin defaultAdmin = Admin.builder()
                     .name("Admin")
                     .telNumber("0599078888")
+                    .accountStatus(AccountStatus.ACTIVE)
 
                     .build();
             adminRepository.save(defaultAdmin);
+            entityService.addUserLoginInfo(defaultAdmin.getTelNumber(), LoginType.ADMIN);
+
             log.info("Default Admin Created Successfully!");
         } else {
             log.info("Admin already exists. Skipping creation.");

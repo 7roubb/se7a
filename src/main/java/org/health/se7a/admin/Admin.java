@@ -26,15 +26,10 @@ public class Admin implements LoginUser {
         return LoginType.ADMIN;
     }
 
-    @Override
-    public AccountStatus getAccountStatus() {
-        return AccountStatus.ACTIVE;
-    }
-
-    @Override
-    public void setAccountStatus(AccountStatus accountStatus) {
+    @Enumerated(EnumType.STRING)
+    private AccountStatus accountStatus = AccountStatus.ACTIVE;
 
     }
 
 
-}
+

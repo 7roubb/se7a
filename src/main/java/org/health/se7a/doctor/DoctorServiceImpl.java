@@ -1,7 +1,9 @@
 package org.health.se7a.doctor;
 
 import lombok.RequiredArgsConstructor;
+import org.health.se7a.entity.EntityService;
 import org.health.se7a.exception.XppException;
+import org.health.se7a.security.model.LoginType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import java.util.Optional;
 public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
+    private final EntityService entityService;
 
     @Override
     public Boolean createDoctor(DoctorDTO doctorDTO) {
@@ -24,6 +27,7 @@ public class DoctorServiceImpl implements DoctorService {
         Doctor doctor = DoctorMapper.toEntity(doctorDTO);
         doctor.setCreatedAt(LocalDateTime.now());
         doctorRepository.save(doctor);
+        entityService.addUserLoginInfo(doctor.getTelNumber(), LoginType.DOCTOR);
         return true;
     }
 
