@@ -1,11 +1,14 @@
 package org.health.se7a.nurse;
 
+import org.health.se7a.common.OnCreate;
+import org.health.se7a.common.OnUpdate;
 import org.health.se7a.common.XppResponseEntity;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,7 +32,7 @@ public class NurseController {
 
     @PostMapping
     @PreAuthorize("@authorizationService.loggedInUserIsAdmin()")
-    public XppResponseEntity<Boolean> createNurse(@RequestBody @Valid NurseDTO nurseDTO) {
+    public XppResponseEntity<Boolean> createNurse(@RequestBody  @Validated(OnCreate.class) NurseDTO nurseDTO) {
         Boolean createdNurse = nurseService.createNurse(nurseDTO);
         return XppResponseEntity.map(createdNurse);
     }
@@ -38,7 +41,7 @@ public class NurseController {
     @PreAuthorize("@authorizationService.userCanViewNurseDetails(#id)")
     public XppResponseEntity<Boolean> updateNurse(
             @PathVariable Long id,
-            @RequestBody @Valid NurseDTO nurseDTO) {
+            @RequestBody  @Validated(OnUpdate.class) NurseDTO nurseDTO) {
         Boolean updatedNurse = nurseService.updateNurse(id, nurseDTO);
         return XppResponseEntity.map(updatedNurse);
     }

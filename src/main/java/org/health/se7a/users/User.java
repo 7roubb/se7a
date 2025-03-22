@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @Table(name = "users")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class User implements LoginUser {
+public abstract class User  {
 
 
     @Id
@@ -38,8 +38,6 @@ public abstract class User implements LoginUser {
     @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus = AccountStatus.ACTIVE;
 
-    @Override
-    public abstract LoginType getType();
 
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp

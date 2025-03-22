@@ -17,7 +17,7 @@ import org.health.se7a.security.model.AccountStatus;
 public class NurseDTO {
 
 
-    @NotNull(message = "{nurse.id.notnull}", groups = OnCreate.class)
+    @NotNull(message = "{nurse.id.notnull}")
     private Long id;
 
     @NotBlank(message = "{nurse.name.notblank}", groups = OnCreate.class)

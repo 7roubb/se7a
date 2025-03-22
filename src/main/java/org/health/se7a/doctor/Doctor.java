@@ -20,8 +20,11 @@ import org.health.se7a.users.User;
 @Entity
 
 public class Doctor extends User implements LoginUser {
+
+
     private String specialty;
 
+    @Column(unique = true,nullable = false)
     private String licenceNumber;
 
     @Override

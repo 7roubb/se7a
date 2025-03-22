@@ -8,7 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.health.se7a.security.model.AccountStatus;
+import org.health.se7a.common.OnCreate;
+import org.health.se7a.common.OnUpdate;
 
 @Data
 @NoArgsConstructor
@@ -16,22 +17,22 @@ import org.health.se7a.security.model.AccountStatus;
 @Builder
 public class DoctorDTO {
 
-    @NotNull(message = "{doctor.id.notnull}")
+    @NotNull(message = "{doctor.id.notnull}", groups = OnUpdate.class)
     private Long id;
 
-    @NotBlank(message = "{doctor.name.notblank}")
-    @Size(min = 2, max = 100, message = "{doctor.name.size}")
+    @NotBlank(message = "{doctor.name.notblank}",groups = OnCreate.class)
+    @Size(min = 2, max = 100, message = "{doctor.name.size}",groups = OnCreate.class)
     private String name;
 
-    @NotBlank(message = "{doctor.telNumber.notblank}")
-    @Pattern(regexp = "^(\\+970|970|0)(59[245789]|56[26789])[0-9]{6}$", message = "{doctor.telNumber.pattern}")
+    @NotBlank(message = "{doctor.telNumber.notblank}",groups = OnCreate.class)
+    @Pattern(regexp = "^(\\+970|970|0)(59[245789]|56[26789])[0-9]{6}$", message = "{doctor.telNumber.pattern}",groups = OnCreate.class)
     private String telNumber;
 
-    @NotBlank(message = "{doctor.specialty.notblank}")
+    @NotBlank(message = "{doctor.specialty.notblank}",groups = OnCreate.class)
     private String specialty;
 
-    @NotBlank(message = "{doctor.licenceNumber.notblank}")
-    @Size(min = 5, max = 20, message = "{doctor.licenceNumber.size}")
+    @NotBlank(message = "{doctor.licenceNumber.notblank}",groups = OnCreate.class)
+    @Size(min = 5, max = 20, message = "{doctor.licenceNumber.size}",groups = OnCreate.class)
     private String licenceNumber;
 
 }

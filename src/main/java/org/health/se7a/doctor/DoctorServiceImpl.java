@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.health.se7a.entity.EntityService;
 import org.health.se7a.exception.XppException;
 import org.health.se7a.security.model.LoginType;
+import org.health.se7a.users.UserRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
     private final EntityService entityService;
+    private final UserRepo userRepo;
 
     @Override
     public Boolean createDoctor(DoctorDTO doctorDTO) {
@@ -74,7 +76,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     private void validateDoctorPhoneNumberUniqueness(String phoneNumber) {
         Optional.of(phoneNumber)
-                .filter(number -> doctorRepository.existsByTelNumber(phoneNumber))
+                .filter(number -> userRepo.existsByTelNumber(phoneNumber))
                 .ifPresent(number -> {
                     throw new XppException(
                             List.of(number),

@@ -3,6 +3,7 @@ package org.health.se7a.nurse;
 import org.health.se7a.entity.EntityService;
 import org.health.se7a.exception.XppException;
 import org.health.se7a.security.model.LoginType;
+import org.health.se7a.users.UserRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ public class NurseServiceImpl implements NurseService {
 
     private final NurseRepository nurseRepository;
     private final EntityService entityService;
+    private final UserRepo userRepo;
 
     @Override
     public NurseDTO getNurseById(Long id) {
@@ -73,8 +75,8 @@ public class NurseServiceImpl implements NurseService {
 
     private void validatePhoneNumberUniqueness(String phoneNumber) {
         Optional.ofNullable(phoneNumber)
-                .filter(telNumber -> !nurseRepository.existsByTelNumber(telNumber))
-                .orElseThrow(() -> new XppException("phoneNumber.already.exists"));
+                .filter(telNumber -> !userRepo.existsByTelNumber(telNumber))
+                .orElseThrow(() -> new XppException(List.of(phoneNumber),HttpStatus.BAD_REQUEST,"phoneNumber.already.exists"));
     }
 
     private void validatePhoneNumberUpdate(Nurse existingNurse, String newPhoneNumber) {
