@@ -32,12 +32,24 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
 
+    @Override
+    public Boolean userCanViewSecretaryDetails(Long secretaryId) {
+        if (loggedInUserIsAdmin())
+            return true;
+        if (loggedInUserIsSecretary())
+            return loggedInUserId().equals(secretaryId);
+        else return false;
+    }
 
     @Override
     public Boolean loggedInUserIsNurse() {
         return loggedInUserIsOfType(LoginType.NURSE);
     }
 
+    @Override
+    public Boolean loggedInUserIsSecretary() {
+        return loggedInUserIsOfType(LoginType.SECRETARY);
+    }
 
     @Override
     public Boolean loggedInUserIsAdmin() {

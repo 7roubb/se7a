@@ -1,8 +1,6 @@
 package org.health.se7a.patients;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,10 +24,16 @@ public class Patients extends User {
 
     private Long Age;
 
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DoctorPatient> doctorPatients;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NursePatient> nursePatients;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<MedicalHistory> medicalHistories;
 
 }
