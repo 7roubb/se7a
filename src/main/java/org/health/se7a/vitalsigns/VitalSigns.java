@@ -15,7 +15,7 @@ public class VitalSigns {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long vital_id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)

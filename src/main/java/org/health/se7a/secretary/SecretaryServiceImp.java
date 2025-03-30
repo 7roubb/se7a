@@ -3,6 +3,7 @@ package org.health.se7a.secretary;
 import lombok.RequiredArgsConstructor;
 import org.health.se7a.entity.EntityService;
 import org.health.se7a.exception.XppException;
+import org.health.se7a.security.model.AccountStatus;
 import org.health.se7a.security.model.LoginType;
 import org.health.se7a.users.UserRepo;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,7 @@ public class SecretaryServiceImp implements SecretaryService {
         validateSecretaryPhoneNumberUniqueness(secretaryDTO.getTelNumber());
         Secretary secretary = SecretaryMapper.toEntity(secretaryDTO);
         secretary.setCreatedAt(LocalDateTime.now());
+        secretary.setAccountStatus(AccountStatus.ACTIVE);
         secretaryRepository.save(secretary);
         entityService.addUserLoginInfo(secretary.getTelNumber(), LoginType.SECRETARY);
         return true;

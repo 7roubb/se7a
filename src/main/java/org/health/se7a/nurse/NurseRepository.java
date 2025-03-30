@@ -20,6 +20,5 @@ public interface NurseRepository extends JpaRepository<Nurse, Long> , UserReposi
         return findById(id);
     }
 
-    Boolean existsByTelNumber(String telNumber);
 
 }

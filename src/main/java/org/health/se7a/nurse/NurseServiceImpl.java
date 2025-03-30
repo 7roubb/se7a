@@ -2,6 +2,7 @@ package org.health.se7a.nurse;
 
 import org.health.se7a.entity.EntityService;
 import org.health.se7a.exception.XppException;
+import org.health.se7a.security.model.AccountStatus;
 import org.health.se7a.security.model.LoginType;
 import org.health.se7a.users.UserRepo;
 import org.springframework.data.domain.Page;
@@ -40,6 +41,7 @@ public class NurseServiceImpl implements NurseService {
     public Boolean createNurse(NurseDTO nurseDTO) {
         validatePhoneNumberUniqueness(nurseDTO.getTelNumber());
         Nurse nurse = NurseMapper.toEntity(nurseDTO);
+        nurse.setAccountStatus(AccountStatus.ACTIVE);
         entityService.addUserLoginInfo(nurse.getTelNumber(), LoginType.NURSE);
         nurseRepository.save(nurse);
         return true;

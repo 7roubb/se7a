@@ -1,41 +1,89 @@
 package org.health.se7a.vitalsigns;
 
 import lombok.RequiredArgsConstructor;
+import org.health.se7a.exception.XppException;
+import org.health.se7a.patients.PatientRepository;
+import org.health.se7a.patients.Patients;
+import org.health.se7a.nurse.Nurse;
+import org.health.se7a.nurse.NurseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
+import java.util.List;
 
-@Repository
+@Service
 @RequiredArgsConstructor
 public class VitalServiceImpl implements VitalService {
 
+    private final VitalSignsRepository vitalSignsRepository;
+    private final PatientRepository patientsRepository;
+    private final NurseRepository nurseRepository;
+
     @Override
-    public Boolean updateVitalSigns(VitalSigns vitalSigns) {
-        return null;
+    @Transactional
+    public Boolean updateVitalSigns(Long id ,VitalSignsDTO vitalSignsDTO) {
+        VitalSigns existingVitalSigns = vitalSignsRepository.findById(id)
+                .orElseThrow(() -> notFoundException(id, "vitalSigns.not.found"));
+
+        updateVitalDetails(existingVitalSigns, vitalSignsDTO);
+        vitalSignsRepository.save(existingVitalSigns);
+        return true;
     }
 
     @Override
+    @Transactional
     public Boolean deleteVitalSigns(Long id) {
-        return null;
+        VitalSigns existingVitalSigns = vitalSignsRepository.findById(id)
+                .orElseThrow(() -> notFoundException(id, "vitalSigns.not.found"));
+
+        vitalSignsRepository.delete(existingVitalSigns);
+        return true;
     }
 
     @Override
-    public Boolean createVitalSigns(VitalSigns vitalSigns) {
-        return null;
+    @Transactional
+    public Boolean createVitalSigns(VitalSignsDTO vitalSignsDTO) {
+        Patients patient = patientsRepository.findById(vitalSignsDTO.getPatientId())
+                .orElseThrow(() -> notFoundException(vitalSignsDTO.getPatientId(), "patient.not.found"));
+
+        Nurse nurse = nurseRepository.findById(vitalSignsDTO.getNurseId())
+                .orElseThrow(() -> notFoundException(vitalSignsDTO.getNurseId(), "nurse.not.found"));
+
+        VitalSigns vitalSigns = VitalSignsMapper.toEntity(vitalSignsDTO, patient, nurse);
+        vitalSignsRepository.save(vitalSigns);
+        return true;
     }
 
     @Override
     public Page<VitalSignsDTO> getVitalSignsByPatient(Long patientId, Pageable pageable) {
-        return null;
+        return vitalSignsRepository.findByPatientId(patientId, pageable)
+                .map(VitalSignsMapper::toDto);
     }
 
     @Override
     public Page<VitalSignsDTO> getVitalSignsDTOByNurse(Long nurseId, Pageable pageable) {
-        return null;
+        return vitalSignsRepository.findByNurseId(nurseId, pageable)
+                .map(VitalSignsMapper::toDto);
     }
 
     @Override
     public VitalSignsDTO getVitalSignsDTOById(Long id) {
-        return null;
+        return vitalSignsRepository.findById(id)
+                .map(VitalSignsMapper::toDto)
+                .orElseThrow(() -> notFoundException(id, "vitalSigns.not.found"));
+    }
+
+    private void updateVitalDetails(VitalSigns vitalSigns, VitalSignsDTO vitalSignsDTO) {
+        vitalSigns.setBloodPressure(vitalSignsDTO.getBloodPressure());
+        vitalSigns.setHeartRate(vitalSignsDTO.getHeartRate());
+        vitalSigns.setTemperature(vitalSignsDTO.getTemperature());
+        vitalSigns.setRespiratoryRate(vitalSignsDTO.getRespiratoryRate());
+        vitalSigns.setRecordedAt(vitalSignsDTO.getRecordedAt());
+    }
+
+    private XppException notFoundException(Long id, String messageKey) {
+        return new XppException(List.of(id), HttpStatus.NOT_FOUND, messageKey);
     }
 }

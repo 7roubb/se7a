@@ -45,10 +45,5 @@ public class SecretaryController {
         return XppResponseEntity.map(updatedSecretary);
     }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("@authorizationService.userCanViewSecretaryDetails(#id)")
-    public XppResponseEntity<Boolean> deleteSecretary(@PathVariable Long id) {
-        Boolean deletedSecretary = secretaryService.deleteSecretary(id);
-        return XppResponseEntity.map(deletedSecretary);
-    }
+
 }

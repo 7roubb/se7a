@@ -36,7 +36,7 @@ public abstract class User  {
     private String telNumber;
 
     @Enumerated(EnumType.STRING)
-    private AccountStatus accountStatus = AccountStatus.ACTIVE;
+    private AccountStatus accountStatus ;
 
 
     @Column(name = "created_at", updatable = false)
