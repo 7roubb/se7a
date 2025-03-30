@@ -4,6 +4,7 @@ import org.health.se7a.common.OnCreate;
 import org.health.se7a.common.OnUpdate;
 import org.health.se7a.common.XppResponseEntity;
 import lombok.RequiredArgsConstructor;
+import org.health.se7a.medications.MedicationDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,6 +40,13 @@ public class PatientController {
     public XppResponseEntity<Boolean> createPatient(@RequestBody @Validated(OnCreate.class) PatientRequestDTO patientRequestDTO) {
         Boolean createdPatient = patientService.createPatient(patientRequestDTO);
         return XppResponseEntity.map(createdPatient);
+    }
+
+    @PostMapping("/addMedication")
+    @PreAuthorize("@authorizationService.loggedInUserIsNurse()")
+    public XppResponseEntity<Boolean> addMedication(@RequestBody @Validated(OnCreate.class) MedicationDTO medicationDTO) {
+        Boolean addedMedication = patientService.addMedication(medicationDTO);
+        return XppResponseEntity.map(addedMedication);
     }
 
     @PutMapping("/{id}")

@@ -79,8 +79,8 @@ public class PatientServiceImpl implements PatientService {
     public Boolean addMedication(MedicationDTO medication) {
         Nurse nurse = nurseRepository.loadById(loggedInUserId())
                 .orElseThrow(() -> notFoundException(loggedInUserId(), "nurse.not.found"));
-        Patients patients = patientRepository.findById(medication.getPatientId()).orElseThrow(() ->
-                notFoundException(medication.getPatientId(), "patient.not.found"));
+        Patients patients = patientRepository.getPatientsByNationalityID(medication.getPatientNatId())
+                .orElseThrow(() -> notFoundException(medication.getPatientNatId(), "patient.not.found"));
         Medication medicationToAdd = MedicationMapper.toEntity(medication,patients,nurse);
         medicationService.addMedication(medicationToAdd);
         return true;
