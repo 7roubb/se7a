@@ -10,7 +10,7 @@ public class VitalSignsMapper {
     public static VitalSignsDTO toDto(VitalSigns vitalSigns) {
         return Optional.ofNullable(vitalSigns)
                 .map(v -> VitalSignsDTO.builder()
-                        .patientId(v.getPatient().getId())
+                        .patientNatId(v.getPatient().getNationalityID())
                         .nurseId(v.getNurse().getId())
                         .bloodPressure(v.getBloodPressure())
                         .heartRate(v.getHeartRate())

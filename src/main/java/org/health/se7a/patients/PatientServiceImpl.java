@@ -2,6 +2,12 @@ package org.health.se7a.patients;
 
 import lombok.RequiredArgsConstructor;
 import org.health.se7a.exception.XppException;
+import org.health.se7a.medications.*;
+import org.health.se7a.nurse.Nurse;
+import org.health.se7a.nurse.NurseMapper;
+import org.health.se7a.nurse.NurseRepository;
+import org.health.se7a.nurse.NurseService;
+import org.health.se7a.security.util.SecurityContextUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -17,6 +23,8 @@ import java.util.Optional;
 public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository patientRepository;
+    private final NurseRepository nurseRepository;
+    private final MedicationService medicationService;
 
     @Override
     @Transactional
@@ -66,6 +74,18 @@ public class PatientServiceImpl implements PatientService {
                 .orElseThrow(() -> notFoundException(id, "patient.not.found"));
     }
 
+    @Override
+    @Transactional
+    public Boolean addMedication(MedicationDTO medication) {
+        Nurse nurse = nurseRepository.loadById(loggedInUserId())
+                .orElseThrow(() -> notFoundException(loggedInUserId(), "nurse.not.found"));
+        Patients patients = patientRepository.findById(medication.getPatientId()).orElseThrow(() ->
+                notFoundException(medication.getPatientId(), "patient.not.found"));
+        Medication medicationToAdd = MedicationMapper.toEntity(medication,patients,nurse);
+        medicationService.addMedication(medicationToAdd);
+        return true;
+    }
+
     private XppException notFoundException(Object identifier, String messageKey) {
         return new XppException(
                 List.of(identifier),
@@ -75,11 +95,14 @@ public class PatientServiceImpl implements PatientService {
     }
 
 
-
     private void updatePatientDetails(Patients patient, PatientRequestDTO patientRequestDTO) {
         Optional.ofNullable(patientRequestDTO.getNationalityID()).ifPresent(patient::setNationalityID);
         Optional.ofNullable(patientRequestDTO.getAge()).ifPresent(patient::setAge);
         Optional.ofNullable(patientRequestDTO.getGender()).ifPresent(patient::setGender);
         patientRepository.save(patient);
+    }
+
+    private Long loggedInUserId() {
+        return SecurityContextUtil.loggedUser().getId();
     }
 }

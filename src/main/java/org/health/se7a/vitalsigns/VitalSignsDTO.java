@@ -16,9 +16,8 @@ import java.time.LocalDateTime;
 public class VitalSignsDTO {
 
     @NotNull(message = "{vitals.patient.notnull}", groups = OnCreate.class)
-    private Long patientId;
+    private String patientNatId;
 
-    @NotNull(message = "{vitals.nurse.notnull}", groups = OnCreate.class)
     private Long nurseId;
 
     @Positive(message = "{vitals.bloodPressure.notnull}", groups = {OnCreate.class, OnUpdate.class})

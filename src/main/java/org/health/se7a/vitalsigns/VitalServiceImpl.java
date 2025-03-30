@@ -6,6 +6,7 @@ import org.health.se7a.patients.PatientRepository;
 import org.health.se7a.patients.Patients;
 import org.health.se7a.nurse.Nurse;
 import org.health.se7a.nurse.NurseRepository;
+import org.health.se7a.security.util.SecurityContextUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -45,10 +46,10 @@ public class VitalServiceImpl implements VitalService {
     @Override
     @Transactional
     public Boolean createVitalSigns(VitalSignsDTO vitalSignsDTO) {
-        Patients patient = patientsRepository.findById(vitalSignsDTO.getPatientId())
-                .orElseThrow(() -> notFoundException(vitalSignsDTO.getPatientId(), "patient.not.found"));
+        Patients patient = patientsRepository.getPatientsByNationalityID(vitalSignsDTO.getPatientNatId())
+                .orElseThrow(() -> notFoundException(vitalSignsDTO.getPatientNatId(), "patient.not.found"));
 
-        Nurse nurse = nurseRepository.findById(vitalSignsDTO.getNurseId())
+        Nurse nurse = nurseRepository.findById(loggedInUserId())
                 .orElseThrow(() -> notFoundException(vitalSignsDTO.getNurseId(), "nurse.not.found"));
 
         VitalSigns vitalSigns = VitalSignsMapper.toEntity(vitalSignsDTO, patient, nurse);
@@ -83,7 +84,11 @@ public class VitalServiceImpl implements VitalService {
         vitalSigns.setRecordedAt(vitalSignsDTO.getRecordedAt());
     }
 
-    private XppException notFoundException(Long id, String messageKey) {
+    private XppException notFoundException(Object id, String messageKey) {
         return new XppException(List.of(id), HttpStatus.NOT_FOUND, messageKey);
+    }
+
+    private Long loggedInUserId() {
+        return SecurityContextUtil.loggedUser().getId();
     }
 }

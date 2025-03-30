@@ -1,5 +1,7 @@
 package org.health.se7a.patients;
 
+import org.health.se7a.medications.Medication;
+import org.health.se7a.medications.MedicationDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -11,6 +13,7 @@ public interface PatientService {
     PatientResponseDTO getPatient(Long id);
     Page<PatientResponseDTO> getAllPatients(Pageable pageable);
     PatientResponseDTO getPatient(String id);
+    Boolean addMedication(MedicationDTO medication);
 
 
 }
