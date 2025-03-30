@@ -3,7 +3,6 @@ package org.health.se7a.doctor;
 import org.health.se7a.common.OnCreate;
 import org.health.se7a.common.OnUpdate;
 import org.health.se7a.common.XppResponseEntity;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,10 +45,4 @@ public class DoctorController {
         return XppResponseEntity.map(updatedDoctor);
     }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("@authorizationService.userCanViewDoctorDetails(#id)")
-    public XppResponseEntity<Boolean> deleteDoctor(@PathVariable Long id) {
-        Boolean deletedDoctor = doctorService.deleteDoctor(id);
-        return XppResponseEntity.map(deletedDoctor);
-    }
 }

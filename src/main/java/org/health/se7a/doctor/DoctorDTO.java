@@ -17,7 +17,6 @@ import org.health.se7a.common.OnUpdate;
 @Builder
 public class DoctorDTO {
 
-    @NotNull(message = "{doctor.id.notnull}", groups = OnUpdate.class)
     private Long id;
 
     @NotBlank(message = "{doctor.name.notblank}",groups = OnCreate.class)

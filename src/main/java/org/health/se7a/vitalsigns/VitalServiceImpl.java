@@ -27,7 +27,6 @@ public class VitalServiceImpl implements VitalService {
     public Boolean updateVitalSigns(Long id ,VitalSignsDTO vitalSignsDTO) {
         VitalSigns existingVitalSigns = vitalSignsRepository.findById(id)
                 .orElseThrow(() -> notFoundException(id, "vitalSigns.not.found"));
-
         updateVitalDetails(existingVitalSigns, vitalSignsDTO);
         vitalSignsRepository.save(existingVitalSigns);
         return true;
@@ -52,28 +51,33 @@ public class VitalServiceImpl implements VitalService {
         Nurse nurse = nurseRepository.findById(loggedInUserId())
                 .orElseThrow(() -> notFoundException(vitalSignsDTO.getNurseId(), "nurse.not.found"));
 
+        if (!patient.getNurses().contains(nurse)) {
+            patient.getNurses().add(nurse);
+        }
         VitalSigns vitalSigns = VitalSignsMapper.toEntity(vitalSignsDTO, patient, nurse);
         vitalSignsRepository.save(vitalSigns);
         return true;
     }
 
     @Override
-    public Page<VitalSignsDTO> getVitalSignsByPatient(Long patientId, Pageable pageable) {
+    public Page<VitalSignsResponseDTO> getVitalSignsByPatient(Long patientId, Pageable pageable) {
         return vitalSignsRepository.findByPatientId(patientId, pageable)
                 .map(VitalSignsMapper::toDto);
+
     }
 
     @Override
-    public Page<VitalSignsDTO> getVitalSignsDTOByNurse(Long nurseId, Pageable pageable) {
+    public Page<VitalSignsResponseDTO> getVitalSignsDTOByNurse(Long nurseId, Pageable pageable) {
         return vitalSignsRepository.findByNurseId(nurseId, pageable)
                 .map(VitalSignsMapper::toDto);
     }
 
     @Override
-    public VitalSignsDTO getVitalSignsDTOById(Long id) {
+    public VitalSignsResponseDTO getVitalSignsDTOById(Long id) {
         return vitalSignsRepository.findById(id)
                 .map(VitalSignsMapper::toDto)
                 .orElseThrow(() -> notFoundException(id, "vitalSigns.not.found"));
+
     }
 
     private void updateVitalDetails(VitalSigns vitalSigns, VitalSignsDTO vitalSignsDTO) {

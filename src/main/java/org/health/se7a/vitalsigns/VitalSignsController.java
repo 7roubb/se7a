@@ -19,19 +19,18 @@ public class VitalSignsController {
     private final VitalService vitalService;
 
     @GetMapping("/patient/{patientId}")
-    public XppResponseEntity<Page<VitalSignsDTO>> getVitalSignsByPatient(@PathVariable Long patientId, Pageable pageable) {
+    public XppResponseEntity<Page<VitalSignsResponseDTO>> getVitalSignsByPatient(@PathVariable Long patientId, Pageable pageable) {
         return XppResponseEntity.map(vitalService.getVitalSignsByPatient(patientId, pageable));
     }
 
     @GetMapping("/nurse/{nurseId}")
     @PreAuthorize("@authorizationService.userCanViewNurseDetails(#nurseId)")
-    public XppResponseEntity<Page<VitalSignsDTO>> getVitalSignsByNurse(@PathVariable Long nurseId, Pageable pageable) {
+    public XppResponseEntity<Page<VitalSignsResponseDTO>> getVitalSignsByNurse(@PathVariable Long nurseId, Pageable pageable) {
         return XppResponseEntity.map(vitalService.getVitalSignsDTOByNurse(nurseId, pageable));
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("@authorizationService.userCanViewVitalSigns(#id)")
-    public XppResponseEntity<VitalSignsDTO> getVitalSignsById(@PathVariable Long id) {
+    public XppResponseEntity<VitalSignsResponseDTO> getVitalSignsById(@PathVariable Long id) {
         return XppResponseEntity.map(vitalService.getVitalSignsDTOById(id));
     }
 

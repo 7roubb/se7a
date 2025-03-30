@@ -1,5 +1,6 @@
 package org.health.se7a.patients;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,14 +9,13 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.health.se7a.doctor.Doctor;
 import org.health.se7a.nurse.Nurse;
-import org.health.se7a.security.model.AccountStatus;
-import org.health.se7a.users.User;
 import org.health.se7a.vitalsigns.VitalSigns;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Getter
@@ -32,9 +32,7 @@ public class Patients {
     private Long id;
 
     private String name;
-
     private String telNumber;
-
 
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
@@ -42,7 +40,6 @@ public class Patients {
 
     @Column(unique = true, nullable = false)
     private String nationalityID;
-
 
     private Long age;
 
@@ -63,6 +60,8 @@ public class Patients {
             joinColumns = @JoinColumn(name = "patient_id"),
             inverseJoinColumns = @JoinColumn(name = "nurse_id")
     )
+    @JsonManagedReference
+    @JsonIgnore
     private List<Nurse> nurses;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)

@@ -37,9 +37,9 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     @Transactional
-    public Boolean updatePatient(Long id, PatientRequestDTO patientRequestDTO) {
-        Patients patient = patientRepository.findById(id)
-                .orElseThrow(() -> notFoundException(id, "patient.not.found"));
+    public Boolean updatePatient(String natId, PatientRequestDTO patientRequestDTO) {
+        Patients patient = patientRepository.getPatientsByNationalityID(natId)
+                .orElseThrow(() -> notFoundException(natId, "patient.not.found"));
 
         updatePatientDetails(patient, patientRequestDTO);
 

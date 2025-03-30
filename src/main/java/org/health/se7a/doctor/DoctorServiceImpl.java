@@ -3,7 +3,6 @@ package org.health.se7a.doctor;
 import lombok.RequiredArgsConstructor;
 import org.health.se7a.entity.EntityService;
 import org.health.se7a.exception.XppException;
-import org.health.se7a.security.model.AccountStatus;
 import org.health.se7a.security.model.LoginType;
 import org.health.se7a.users.UserRepo;
 import org.springframework.data.domain.Page;
@@ -29,7 +28,6 @@ public class DoctorServiceImpl implements DoctorService {
         validateDoctorPhoneNumberUniqueness(doctorDTO.getTelNumber());
         Doctor doctor = DoctorMapper.toEntity(doctorDTO);
         doctor.setCreatedAt(LocalDateTime.now());
-        doctor.setAccountStatus(AccountStatus.ACTIVE);
         doctorRepository.save(doctor);
         entityService.addUserLoginInfo(doctor.getTelNumber(), LoginType.DOCTOR);
         return true;

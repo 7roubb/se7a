@@ -49,12 +49,12 @@ public class PatientController {
         return XppResponseEntity.map(addedMedication);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{natId}")
     @PreAuthorize("@authorizationService.loggedInUserIsSecretary()")
     public XppResponseEntity<Boolean> updatePatient(
-            @PathVariable Long id,
+            @PathVariable String natId,
             @RequestBody @Validated(OnUpdate.class) PatientRequestDTO patientRequestDTO) {
-        Boolean updatedPatient = patientService.updatePatient(id, patientRequestDTO);
+        Boolean updatedPatient = patientService.updatePatient(natId, patientRequestDTO);
         return XppResponseEntity.map(updatedPatient);
     }
 

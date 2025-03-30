@@ -46,10 +46,5 @@ public class NurseController {
         return XppResponseEntity.map(updatedNurse);
     }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("@authorizationService.userCanViewNurseDetails(#id)")
-    public XppResponseEntity<Boolean> deleteNurse(@PathVariable Long id) {
-        Boolean deletedNurse = nurseService.deleteNurse(id);
-        return XppResponseEntity.map(deletedNurse);
-    }
+
 }

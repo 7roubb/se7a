@@ -75,7 +75,7 @@ public class XppExceptionHandler {
         XppResponse<Object> response = XppResponse.map(
                 null,
                 HttpStatus.FORBIDDEN,
-                messageSource.getMessage(exception.getMessage(),
+                messageSource.getMessage("access.denied",
                         new Object[]{},
                         LocaleContextHolder.getLocale())
         );
