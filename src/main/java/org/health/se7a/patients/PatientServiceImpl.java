@@ -23,8 +23,6 @@ import java.util.Optional;
 public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository patientRepository;
-    private final NurseRepository nurseRepository;
-    private final MedicationService medicationService;
 
     @Override
     @Transactional
@@ -73,18 +71,13 @@ public class PatientServiceImpl implements PatientService {
                 .map(PatientMapper::toDto)
                 .orElseThrow(() -> notFoundException(id, "patient.not.found"));
     }
-
     @Override
-    @Transactional
-    public Boolean addMedication(MedicationDTO medication) {
-        Nurse nurse = nurseRepository.loadById(loggedInUserId())
-                .orElseThrow(() -> notFoundException(loggedInUserId(), "nurse.not.found"));
-        Patients patients = patientRepository.getPatientsByNationalityID(medication.getPatientNatId())
-                .orElseThrow(() -> notFoundException(medication.getPatientNatId(), "patient.not.found"));
-        Medication medicationToAdd = MedicationMapper.toEntity(medication,patients,nurse);
-        medicationService.addMedication(medicationToAdd);
-        return true;
+    public Patients getPatientByNatId(String id) {
+        return patientRepository.getPatientsByNationalityID(id)
+                .orElseThrow(() -> notFoundException(id, "patient.not.found"));
     }
+
+
 
     private XppException notFoundException(Object identifier, String messageKey) {
         return new XppException(
@@ -102,7 +95,4 @@ public class PatientServiceImpl implements PatientService {
         patientRepository.save(patient);
     }
 
-    private Long loggedInUserId() {
-        return SecurityContextUtil.loggedUser().getId();
-    }
 }

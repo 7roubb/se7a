@@ -19,14 +19,12 @@ public class VitalSigns {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "patient_id", nullable = false)
+    @JoinColumn(name = "patient_nat_id", referencedColumnName = "nationalityID", nullable = false)
     @JsonIgnoreProperties("vitalSigns")
-
     private Patients patient;
 
     @ManyToOne
     @JoinColumn(name = "nurse_id", nullable = false)
-
     private Nurse nurse;
 
     private Double bloodPressure;

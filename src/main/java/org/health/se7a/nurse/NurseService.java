@@ -9,4 +9,5 @@ public interface NurseService {
     Boolean deleteNurse(Long id);
     NurseDTO getNurseById(Long id);
     Page<NurseDTO> getAllNurses(Pageable page);
+    Nurse getNurse();
 }

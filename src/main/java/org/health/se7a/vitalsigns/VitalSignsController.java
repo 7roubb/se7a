@@ -18,9 +18,9 @@ public class VitalSignsController {
 
     private final VitalService vitalService;
 
-    @GetMapping("/patient/{patientId}")
-    public XppResponseEntity<Page<VitalSignsResponseDTO>> getVitalSignsByPatient(@PathVariable Long patientId, Pageable pageable) {
-        return XppResponseEntity.map(vitalService.getVitalSignsByPatient(patientId, pageable));
+    @GetMapping("/patient/{patientNatId}")
+    public XppResponseEntity<Page<VitalSignsResponseDTO>> getVitalSignsByPatient(@PathVariable String patientNatId, Pageable pageable) {
+        return XppResponseEntity.map(vitalService.getVitalSignsByPatient(patientNatId, pageable));
     }
 
     @GetMapping("/nurse/{nurseId}")

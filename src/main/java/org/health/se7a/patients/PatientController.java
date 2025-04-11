@@ -42,12 +42,6 @@ public class PatientController {
         return XppResponseEntity.map(createdPatient);
     }
 
-    @PostMapping("/addMedication")
-    @PreAuthorize("@authorizationService.loggedInUserIsNurse()")
-    public XppResponseEntity<Boolean> addMedication(@RequestBody @Validated(OnCreate.class) MedicationDTO medicationDTO) {
-        Boolean addedMedication = patientService.addMedication(medicationDTO);
-        return XppResponseEntity.map(addedMedication);
-    }
 
     @PutMapping("/{natId}")
     @PreAuthorize("@authorizationService.loggedInUserIsSecretary()")

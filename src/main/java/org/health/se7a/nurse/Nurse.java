@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Nurse extends User implements LoginUser {
 
     @ManyToMany(mappedBy = "nurses")
-    @JsonBackReference  // To prevent recursion on the reverse side
+    @JsonBackReference
     private List<Patients> patients;
 
     @Override

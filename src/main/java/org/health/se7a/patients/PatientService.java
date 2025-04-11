@@ -12,7 +12,6 @@ public interface PatientService {
     PatientResponseDTO getPatient(Long id);
     Page<PatientResponseDTO> getAllPatients(Pageable pageable);
     PatientResponseDTO getPatient(String id);
-    Boolean addMedication(MedicationDTO medication);
-
+    Patients getPatientByNatId(String natId);
 
 }

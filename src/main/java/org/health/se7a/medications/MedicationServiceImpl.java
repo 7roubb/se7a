@@ -2,6 +2,14 @@ package org.health.se7a.medications;
 
 import lombok.RequiredArgsConstructor;
 import org.health.se7a.exception.XppException;
+import org.health.se7a.nurse.Nurse;
+import org.health.se7a.nurse.NurseRepository;
+import org.health.se7a.nurse.NurseService;
+import org.health.se7a.nurse.NurseServiceImpl;
+import org.health.se7a.patients.PatientRepository;
+import org.health.se7a.patients.PatientService;
+import org.health.se7a.patients.Patients;
+import org.health.se7a.security.util.SecurityContextUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -17,9 +25,14 @@ import java.util.Optional;
 public class MedicationServiceImpl implements MedicationService {
 
     private final MedicationRepository medicationRepository;
+    private final NurseService nurseService;
+    private final PatientService patientService;
 
     @Override
-    public Boolean addMedication(Medication medication) {
+    public Boolean addMedication(MedicationDTO medicationDTO) {
+        Patients patient = patientService.getPatientByNatId(medicationDTO.getPatientNatId());
+        Nurse nurse = nurseService.getNurse();
+        Medication medication = MedicationMapper.toEntity(medicationDTO,patient,nurse);
         medication.setAdministeredAt(LocalDateTime.now());
         medicationRepository.save(medication);
         return true;
@@ -49,9 +62,18 @@ public class MedicationServiceImpl implements MedicationService {
     }
 
     @Override
-    public Page<Medication> findAllMedications(Pageable pageable) {
-        return medicationRepository.findAll(pageable);
+    public Page<MedicationDTO> getMedicationByPatientNatId(String natId, Pageable pageable) {
+        return medicationRepository.findByPatient_NationalityID(natId,pageable)
+                .map(MedicationMapper::toDto);
     }
+
+    @Override
+    public Page<MedicationDTO> getMedicationByNurse(Pageable pageable) {
+        return medicationRepository.findMedicationsByNurseId(loggedInUserId(), pageable)
+                .map(MedicationMapper::toDto);
+    }
+
+
 
     private XppException notFoundException(Object identifier, String messageKey) {
         return new XppException(
@@ -68,4 +90,8 @@ public class MedicationServiceImpl implements MedicationService {
         existingMedication.setAdministeredAt(LocalDateTime.now());
         medicationRepository.save(existingMedication);
     }
+    private Long loggedInUserId() {
+        return SecurityContextUtil.loggedUser().getId();
+    }
+
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VitalSignsRepository extends JpaRepository<VitalSigns,Long> {
 
-    Page<VitalSigns> findByPatientId(Long patientId, Pageable pageable);
+    Page<VitalSigns> findByPatient_NationalityID(String patientNationalityID, Pageable pageable);
     Page<VitalSigns> findByNurseId(Long nurseId, Pageable pageable);
 
 }

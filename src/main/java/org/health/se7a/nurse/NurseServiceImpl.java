@@ -4,6 +4,7 @@ import org.health.se7a.entity.EntityService;
 import org.health.se7a.exception.XppException;
 import org.health.se7a.security.model.AccountStatus;
 import org.health.se7a.security.model.LoginType;
+import org.health.se7a.security.util.SecurityContextUtil;
 import org.health.se7a.users.UserRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -86,8 +87,17 @@ public class NurseServiceImpl implements NurseService {
             validatePhoneNumberUniqueness(newPhoneNumber);
         }
     }
+    @Override
+    public Nurse getNurse() {
+        return nurseRepository.findById(loggedInUserId())
+                .orElseThrow(() -> notFoundException(loggedInUserId(), "nurse.not.found"));
+    }
 
     private XppException notFoundException(Long id, String messageKey) {
         return new XppException(List.of(id), HttpStatus.NOT_FOUND, messageKey);
     }
+    private Long loggedInUserId() {
+        return SecurityContextUtil.loggedUser().getId();
+    }
+
 }

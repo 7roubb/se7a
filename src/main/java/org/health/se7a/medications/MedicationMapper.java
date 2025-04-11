@@ -10,6 +10,7 @@ public class MedicationMapper {
     public static MedicationDTO toDto(Medication medication) {
         return Optional.ofNullable(medication)
                 .map(m -> MedicationDTO.builder()
+                        .id(m.getId())
                         .patientNatId(m.getPatient().getNationalityID())
                         .drugName(m.getDrugName())
                         .dosage(m.getDosage())

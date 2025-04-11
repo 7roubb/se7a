@@ -2,7 +2,9 @@ package org.health.se7a.vitalsigns;
 
 import lombok.RequiredArgsConstructor;
 import org.health.se7a.exception.XppException;
+import org.health.se7a.nurse.NurseService;
 import org.health.se7a.patients.PatientRepository;
+import org.health.se7a.patients.PatientService;
 import org.health.se7a.patients.Patients;
 import org.health.se7a.nurse.Nurse;
 import org.health.se7a.nurse.NurseRepository;
@@ -19,8 +21,8 @@ import java.util.List;
 public class VitalServiceImpl implements VitalService {
 
     private final VitalSignsRepository vitalSignsRepository;
-    private final PatientRepository patientsRepository;
-    private final NurseRepository nurseRepository;
+    private final NurseService nurseService;
+    private final PatientService patientService;
 
     @Override
     @Transactional
@@ -45,11 +47,8 @@ public class VitalServiceImpl implements VitalService {
     @Override
     @Transactional
     public Boolean createVitalSigns(VitalSignsDTO vitalSignsDTO) {
-        Patients patient = patientsRepository.getPatientsByNationalityID(vitalSignsDTO.getPatientNatId())
-                .orElseThrow(() -> notFoundException(vitalSignsDTO.getPatientNatId(), "patient.not.found"));
-
-        Nurse nurse = nurseRepository.findById(loggedInUserId())
-                .orElseThrow(() -> notFoundException(vitalSignsDTO.getNurseId(), "nurse.not.found"));
+        Patients patient = patientService.getPatientByNatId(vitalSignsDTO.getPatientNatId());
+        Nurse nurse = nurseService.getNurse();
 
         if (!patient.getNurses().contains(nurse)) {
             patient.getNurses().add(nurse);
@@ -60,8 +59,8 @@ public class VitalServiceImpl implements VitalService {
     }
 
     @Override
-    public Page<VitalSignsResponseDTO> getVitalSignsByPatient(Long patientId, Pageable pageable) {
-        return vitalSignsRepository.findByPatientId(patientId, pageable)
+    public Page<VitalSignsResponseDTO> getVitalSignsByPatient(String patientId, Pageable pageable) {
+        return vitalSignsRepository.findByPatient_NationalityID(patientId, pageable)
                 .map(VitalSignsMapper::toDto);
 
     }

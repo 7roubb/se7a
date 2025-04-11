@@ -24,7 +24,7 @@ public class Medication {
 
     private String drugName;
     private Double dosage;
-    private String administrationMethod; // e.g., Oral, IV
+    private String administrationMethod;
     private LocalDateTime administeredAt;
 
     @ManyToOne
