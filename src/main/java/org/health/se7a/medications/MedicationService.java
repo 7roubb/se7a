@@ -6,9 +6,9 @@ public interface MedicationService {
     Boolean addMedication(MedicationDTO medication);
     Boolean updateMedication(Long id,MedicationDTO medication);
     Boolean deleteMedication(Long id);
-    Medication findMedicationById(Long id);
-    Page<MedicationDTO> getMedicationByPatientNatId(String natId,Pageable pageable);
-    Page<MedicationDTO> getMedicationByNurse(Pageable pageable);
+    MedicationResponseDTO findMedicationById(Long id);
+    Page<MedicationResponseDTO> getMedicationByPatientNatId(String natId,Pageable pageable);
+    Page<MedicationResponseDTO> getMedicationByNurse(Pageable pageable);
 
 
 }

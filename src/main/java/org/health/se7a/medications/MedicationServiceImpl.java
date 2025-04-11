@@ -3,10 +3,7 @@ package org.health.se7a.medications;
 import lombok.RequiredArgsConstructor;
 import org.health.se7a.exception.XppException;
 import org.health.se7a.nurse.Nurse;
-import org.health.se7a.nurse.NurseRepository;
 import org.health.se7a.nurse.NurseService;
-import org.health.se7a.nurse.NurseServiceImpl;
-import org.health.se7a.patients.PatientRepository;
 import org.health.se7a.patients.PatientService;
 import org.health.se7a.patients.Patients;
 import org.health.se7a.security.util.SecurityContextUtil;
@@ -56,21 +53,22 @@ public class MedicationServiceImpl implements MedicationService {
     }
 
     @Override
-    public Medication findMedicationById(Long id) {
+    public MedicationResponseDTO findMedicationById(Long id) {
         return medicationRepository.findById(id)
+                .map(MedicationMapper::toResponse)
                 .orElseThrow(() -> notFoundException(id, "medication.not.found"));
     }
 
     @Override
-    public Page<MedicationDTO> getMedicationByPatientNatId(String natId, Pageable pageable) {
+    public Page<MedicationResponseDTO> getMedicationByPatientNatId(String natId, Pageable pageable) {
         return medicationRepository.findByPatient_NationalityID(natId,pageable)
-                .map(MedicationMapper::toDto);
+                .map(MedicationMapper::toResponse);
     }
 
     @Override
-    public Page<MedicationDTO> getMedicationByNurse(Pageable pageable) {
+    public Page<MedicationResponseDTO> getMedicationByNurse(Pageable pageable) {
         return medicationRepository.findMedicationsByNurseId(loggedInUserId(), pageable)
-                .map(MedicationMapper::toDto);
+                .map(MedicationMapper::toResponse);
     }
 
 

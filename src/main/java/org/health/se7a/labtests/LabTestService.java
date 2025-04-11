@@ -7,7 +7,7 @@ public interface LabTestService {
     Boolean createLabTest(LabTestDTO labTestDTO);
     Boolean updateLabTest(Long id,LabTestDTO labTestDTO);
     Boolean deleteLabTest(Long id);
-    Page<LabTestDTO> getLabTestsByPatientNatId(String natId, Pageable pageable);
-    LabTestDTO getLabTestById(Long id);
-    Page<LabTestDTO> getByNurse(Pageable pageable);
+    Page<LabTestResponseDTO> getLabTestsByPatientNatId(String natId, Pageable pageable);
+    LabTestResponseDTO getLabTestById(Long id);
+    Page<LabTestResponseDTO> getByNurse(Pageable pageable);
 }

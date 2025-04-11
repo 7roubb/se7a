@@ -1,19 +1,22 @@
 package org.health.se7a.labtests;
 
+import org.health.se7a.nurse.NurseMapper;
+import org.health.se7a.patients.PatientMapper;
 import org.health.se7a.patients.Patients;
 
 import java.util.Optional;
 
 public class LabTestMapper {
 
-    public static LabTestDTO toDto(LabTest labTest) {
+    public static LabTestResponseDTO toResponse(LabTest labTest) {
         return Optional.ofNullable(labTest)
-                .map(l -> LabTestDTO.builder()
+                .map(l -> LabTestResponseDTO.builder()
                         .id(l.getId())
-                        .patientNatId(l.getPatient().getNationalityID())
                         .testName(l.getTestName())
                         .result(l.getResult())
                         .testDate(l.getTestDate())
+                        .nurse(NurseMapper.toDto(l.getNurse()))
+                        .patient(PatientMapper.toDto(l.getPatient()))
                         .build())
                 .orElse(null);
     }

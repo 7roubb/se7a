@@ -1,5 +1,7 @@
 package org.health.se7a.medications;
 
+import org.health.se7a.nurse.NurseMapper;
+import org.health.se7a.patients.PatientMapper;
 import org.health.se7a.patients.Patients;
 import org.health.se7a.nurse.Nurse;
 
@@ -7,13 +9,14 @@ import java.util.Optional;
 
 public class MedicationMapper {
 
-    public static MedicationDTO toDto(Medication medication) {
+    public static MedicationResponseDTO toResponse(Medication medication) {
         return Optional.ofNullable(medication)
-                .map(m -> MedicationDTO.builder()
+                .map(m -> MedicationResponseDTO.builder()
                         .id(m.getId())
-                        .patientNatId(m.getPatient().getNationalityID())
                         .drugName(m.getDrugName())
                         .dosage(m.getDosage())
+                        .patient(PatientMapper.toDto(m.getPatient()))
+                        .nurse(NurseMapper.toDto(m.getNurse()))
                         .administrationMethod(m.getAdministrationMethod())
                         .administeredAt(m.getAdministeredAt())
                         .build())

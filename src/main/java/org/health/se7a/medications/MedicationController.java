@@ -20,7 +20,7 @@ public class MedicationController {
     @GetMapping("/{id}")
     public XppResponseEntity<MedicationDTO> getMedicationById(@PathVariable Long id) {
         Medication medication = medicationService.findMedicationById(id);
-        return XppResponseEntity.map(MedicationMapper.toDto(medication));
+        return XppResponseEntity.map(MedicationMapper.toResponse(medication));
     }
 
     @PostMapping

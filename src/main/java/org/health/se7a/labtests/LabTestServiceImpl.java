@@ -31,6 +31,7 @@ public class LabTestServiceImpl implements LabTestService {
         Nurse nurse = nurseService.getNurse();
         LabTest labTest = LabTestMapper.toEntity(labTestDTO, patient);
         labTest.setTestDate(LocalDateTime.now());
+        labTest.setNurse(nurse);
         labTestRepository.save(labTest);
         return true;
     }
@@ -53,22 +54,22 @@ public class LabTestServiceImpl implements LabTestService {
     }
 
     @Override
-    public Page<LabTestDTO> getLabTestsByPatientNatId(String natId, Pageable pageable) {
+    public Page<LabTestResponseDTO> getLabTestsByPatientNatId(String natId, Pageable pageable) {
         return labTestRepository.findLabTestByPatient_NationalityID(natId, pageable)
-                .map(LabTestMapper::toDto);
+                .map(LabTestMapper::toResponse);
     }
 
     @Override
-    public LabTestDTO getLabTestById(Long id) {
+    public LabTestResponseDTO getLabTestById(Long id) {
         LabTest labTest = labTestRepository.findById(id)
                 .orElseThrow(() -> notFoundException(id, "labtest.not.found"));
-        return LabTestMapper.toDto(labTest);
+        return LabTestMapper.toResponse(labTest);
     }
 
     @Override
-    public Page<LabTestDTO> getByNurse(Pageable pageable) {
+    public Page<LabTestResponseDTO> getByNurse(Pageable pageable) {
         return labTestRepository.findLabTestByNurse_Id(loggedInUserId(), pageable)
-                .map(LabTestMapper::toDto);
+                .map(LabTestMapper::toResponse);
     }
 
     private void updateLabTestDetails(LabTest existingTest, LabTestDTO dto) {
