@@ -18,9 +18,9 @@ public class MedicationController {
     private final MedicationService medicationService;
 
     @GetMapping("/{id}")
-    public XppResponseEntity<MedicationDTO> getMedicationById(@PathVariable Long id) {
-        Medication medication = medicationService.findMedicationById(id);
-        return XppResponseEntity.map(MedicationMapper.toResponse(medication));
+    public XppResponseEntity<MedicationResponseDTO> getMedicationById(@PathVariable Long id) {
+        MedicationResponseDTO medication = medicationService.findMedicationById(id);
+        return XppResponseEntity.map(medication);
     }
 
     @PostMapping
@@ -44,13 +44,13 @@ public class MedicationController {
     }
 
     @GetMapping("/patient/{patientNatId}")
-    public XppResponseEntity<Page<MedicationDTO>> getMedicationsByPatient(@PathVariable String patientNatId, Pageable pageable) {
+    public XppResponseEntity<Page<MedicationResponseDTO>> getMedicationsByPatient(@PathVariable String patientNatId, Pageable pageable) {
         return XppResponseEntity.map(medicationService.getMedicationByPatientNatId(patientNatId, pageable));
     }
 
     @GetMapping("/nurse")
     @PreAuthorize("@authorizationService.loggedInUserIsNurse()")
-    public XppResponseEntity<Page<MedicationDTO>> getMedicationsByLoggedInNurse(Pageable pageable) {
+    public XppResponseEntity<Page<MedicationResponseDTO>> getMedicationsByLoggedInNurse(Pageable pageable) {
         return XppResponseEntity.map(medicationService.getMedicationByNurse(pageable));
     }
 }
