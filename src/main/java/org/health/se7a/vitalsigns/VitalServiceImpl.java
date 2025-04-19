@@ -49,7 +49,6 @@ public class VitalServiceImpl implements VitalService {
     public Boolean createVitalSigns(VitalSignsDTO vitalSignsDTO) {
         Patients patient = patientService.getPatientByNatId(vitalSignsDTO.getPatientNatId());
         Nurse nurse = nurseService.getNurse();
-
         if (!patient.getNurses().contains(nurse)) {
             patient.getNurses().add(nurse);
         }

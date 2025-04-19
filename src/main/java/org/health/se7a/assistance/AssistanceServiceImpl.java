@@ -1,14 +1,12 @@
 package org.health.se7a.assistance;
 
 import lombok.RequiredArgsConstructor;
-import org.health.se7a.doctor.Doctor;
 import org.health.se7a.doctor.DoctorDTO;
 import org.health.se7a.doctor.DoctorMapper;
 import org.health.se7a.doctor.DoctorService;
 import org.health.se7a.exception.XppException;
 import org.health.se7a.nurse.Nurse;
 import org.health.se7a.nurse.NurseService;
-import org.health.se7a.patients.PatientResponseDTO;
 import org.health.se7a.patients.PatientService;
 import org.health.se7a.patients.Patients;
 import org.springframework.data.domain.Page;
@@ -71,7 +69,7 @@ public class AssistanceServiceImpl implements AssistanceService {
 
     @Override
     public Page<MedicalAssistanceResponseDTO> GetAllMedicalAssistance(Pageable pageable) {
-        return repository.getAll(pageable)
+        return repository.findAll(pageable)
                 .map(MedicalAssistanceMapper::toResponse);
     }
 

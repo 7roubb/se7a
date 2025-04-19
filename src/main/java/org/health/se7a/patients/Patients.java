@@ -64,9 +64,5 @@ public class Patients {
     @JsonIgnore
     private List<Nurse> nurses;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
-    private List<MedicalHistory> medicalHistories;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<VitalSigns> vitalSigns;
 }
