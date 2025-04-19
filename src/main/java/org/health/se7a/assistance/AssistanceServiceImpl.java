@@ -38,8 +38,8 @@ public class AssistanceServiceImpl implements AssistanceService {
     }
 
     @Override
-    public Boolean UpdateAssistance(MedicalAssistanceDTO dto) {
-        MedicalAssistance assistance = repository.findById(dto.getId().intValue())
+    public Boolean UpdateAssistance(Long id,MedicalAssistanceDTO dto) {
+        MedicalAssistance assistance = repository.findById(id.intValue())
                 .orElseThrow(() -> notFoundException(dto.getId(), "assistance.not.found"));
         assistance.setNotes(dto.getNotes());
         assistance.setToolsPrepared(dto.getToolsPrepared());
@@ -88,7 +88,7 @@ public class AssistanceServiceImpl implements AssistanceService {
     @Override
     public Page<MedicalAssistanceResponseDTO> GetMedicalAssistanceByPatient(Pageable pageable, String patientId) {
         Patients patient = patientService.getPatientByNatId(patientId);
-        return repository.getAllByPatient_NationalityID(patient.getNationalityID(), pageable)
+        return repository.findMedicalAssistanceByPatient_NationalityID(patient.getNationalityID(), pageable)
                 .map(MedicalAssistanceMapper::toResponse);
     }
 

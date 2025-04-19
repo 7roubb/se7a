@@ -21,17 +21,18 @@ public class MedicalAssistance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "nurse_id", nullable = false)
     private Nurse nurse;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor doctor;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)
     private Patients patient;
+
 
     @ElementCollection
     @CollectionTable(name = "medical_assistance_tools", joinColumns = @JoinColumn(name = "medical_assistance_id"))

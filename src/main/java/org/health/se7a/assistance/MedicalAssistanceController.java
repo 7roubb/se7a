@@ -12,14 +12,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/assistances")
+@RequestMapping("/assistance")
 @RequiredArgsConstructor
 public class MedicalAssistanceController {
 
     private final AssistanceService assistanceService;
 
     @GetMapping
-    @PreAuthorize("@authorizationService.loggedInUserIsAdminOrNurse()")
+    @PreAuthorize("@authorizationService.loggedInUserIsAdmin()")
     public XppResponseEntity<Page<MedicalAssistanceResponseDTO>> getAllAssistances(Pageable pageable) {
         return XppResponseEntity.map(assistanceService.GetAllMedicalAssistance(pageable));
     }
@@ -54,10 +54,10 @@ public class MedicalAssistanceController {
         return XppResponseEntity.map(assistanceService.CreateAssistance(dto));
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @PreAuthorize("@authorizationService.loggedInUserIsNurse()")
-    public XppResponseEntity<Boolean> updateAssistance(@RequestBody @Validated(OnUpdate.class) MedicalAssistanceDTO dto) {
-        return XppResponseEntity.map(assistanceService.UpdateAssistance(dto));
+    public XppResponseEntity<Boolean> updateAssistance(@PathVariable Long id,@RequestBody @Validated(OnUpdate.class) MedicalAssistanceDTO dto) {
+        return XppResponseEntity.map(assistanceService.UpdateAssistance(id,dto));
     }
 
     @DeleteMapping("/{id}")
