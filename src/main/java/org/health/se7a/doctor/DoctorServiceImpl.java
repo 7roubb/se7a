@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,13 +46,7 @@ public class DoctorServiceImpl implements DoctorService {
         return true;
     }
 
-    @Override
-    public Boolean deleteDoctor(Long id) {
-        Doctor doctor = doctorRepository.findById(id)
-                .orElseThrow(() -> notFoundException(id, "doctor.not.found"));
-        doctorRepository.delete(doctor);
-        return true;
-    }
+
 
     @Override
     public DoctorDTO getDoctorById(Long id) {
@@ -64,6 +59,16 @@ public class DoctorServiceImpl implements DoctorService {
     public Page<DoctorDTO> getAllDoctors(Pageable pageable) {
         return doctorRepository.findAll(pageable)
                 .map(DoctorMapper::toDto);
+    }
+
+    @Override
+    public List<DoctorLookupDTO> getAllDoctorsForLookup() {
+        return doctorRepository.findAll().stream()
+                .map(doc -> DoctorLookupDTO.builder()
+                        .id(doc.getId())
+                        .fullName(doc.getName())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     private XppException notFoundException(Object identifier, String messageKey) {

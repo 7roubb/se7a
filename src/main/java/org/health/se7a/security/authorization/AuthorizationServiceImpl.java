@@ -29,6 +29,11 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
+    public Boolean loggedInUserIsAdminOrNurse() {
+        return loggedInUserIsAdmin() || loggedInUserIsNurse();
+    }
+
+    @Override
     public Boolean userCanViewSecretaryDetails(Long secretaryId) {
         if (loggedInUserIsAdmin())
             return true;

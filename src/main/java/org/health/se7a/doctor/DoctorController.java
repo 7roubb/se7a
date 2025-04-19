@@ -10,6 +10,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/doctors")
 @RequiredArgsConstructor
@@ -43,6 +45,11 @@ public class DoctorController {
             @RequestBody  @Validated(OnUpdate.class) DoctorDTO doctorDTO) {
         Boolean updatedDoctor = doctorService.updateDoctor(id, doctorDTO);
         return XppResponseEntity.map(updatedDoctor);
+    }
+    @GetMapping("/lookup")
+    @PreAuthorize("@authorizationService.loggedInUserIsAdminOrNurse()")
+    public XppResponseEntity<List<DoctorLookupDTO>> getDoctorLookup() {
+        return XppResponseEntity.map(doctorService.getAllDoctorsForLookup());
     }
 
 }

@@ -16,6 +16,7 @@ public interface AuthorizationService {
 
     Boolean userCanViewSecretaryDetails(Long secretaryId);
 
+    Boolean loggedInUserIsAdminOrNurse();
 
     Boolean userCanViewVitalSigns(Long patientId);
 }
