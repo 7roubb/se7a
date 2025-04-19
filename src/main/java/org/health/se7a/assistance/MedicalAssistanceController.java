@@ -53,12 +53,13 @@ public class MedicalAssistanceController {
     public XppResponseEntity<Boolean> createAssistance(@RequestBody @Validated(OnCreate.class) MedicalAssistanceDTO dto) {
         return XppResponseEntity.map(assistanceService.CreateAssistance(dto));
     }
-
     @PutMapping("/{id}")
     @PreAuthorize("@authorizationService.loggedInUserIsNurse()")
-    public XppResponseEntity<Boolean> updateAssistance(@PathVariable Long id,@RequestBody @Validated(OnUpdate.class) MedicalAssistanceDTO dto) {
-        return XppResponseEntity.map(assistanceService.UpdateAssistance(id,dto));
+    public XppResponseEntity<Boolean> updateAssistance(@PathVariable Long id,
+                                                       @RequestBody @Validated(OnUpdate.class) MedicalAssistanceDTO dto) {
+        return XppResponseEntity.map(assistanceService.UpdateAssistance(id, dto));
     }
+
 
     @DeleteMapping("/{id}")
     @PreAuthorize("@authorizationService.loggedInUserIsNurse()")

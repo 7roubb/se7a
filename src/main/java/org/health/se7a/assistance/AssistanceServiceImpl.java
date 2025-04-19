@@ -39,8 +39,8 @@ public class AssistanceServiceImpl implements AssistanceService {
 
     @Override
     public Boolean UpdateAssistance(Long id,MedicalAssistanceDTO dto) {
-        MedicalAssistance assistance = repository.findById(id.intValue())
-                .orElseThrow(() -> notFoundException(dto.getId(), "assistance.not.found"));
+        MedicalAssistance assistance = repository.findById(id)
+                .orElseThrow(() -> notFoundException(id));
         assistance.setNotes(dto.getNotes());
         assistance.setToolsPrepared(dto.getToolsPrepared());
         if (dto.getDoctorId() != null) {
@@ -54,16 +54,16 @@ public class AssistanceServiceImpl implements AssistanceService {
 
     @Override
     public Boolean DeleteAssistance(Long id) {
-        MedicalAssistance assistance = repository.findById(id.intValue())
-                .orElseThrow(() -> notFoundException(id, "assistance.not.found"));
+        MedicalAssistance assistance = repository.findById(id)
+                .orElseThrow(() -> notFoundException(id));
         repository.delete(assistance);
         return true;
     }
 
     @Override
     public MedicalAssistanceResponseDTO GetMedicalAssistance(Long id) {
-        MedicalAssistance assistance = repository.findById(id.intValue())
-                .orElseThrow(() -> notFoundException(id, "assistance.not.found"));
+        MedicalAssistance assistance = repository.findById(id)
+                .orElseThrow(() -> notFoundException(id));
         return MedicalAssistanceMapper.toResponse(assistance);
     }
 
@@ -92,7 +92,7 @@ public class AssistanceServiceImpl implements AssistanceService {
                 .map(MedicalAssistanceMapper::toResponse);
     }
 
-    private XppException notFoundException(Object identifier, String messageKey) {
-        return new XppException(List.of(identifier), HttpStatus.NOT_FOUND, messageKey);
+    private XppException notFoundException(Object identifier) {
+        return new XppException(List.of(identifier), HttpStatus.NOT_FOUND, "assistance.not.found");
     }
 }

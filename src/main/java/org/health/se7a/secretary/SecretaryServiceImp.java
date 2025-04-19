@@ -88,6 +88,7 @@ public class SecretaryServiceImp implements SecretaryService {
                 });
     }
 
+
     private void validatePhoneNumberUpdate(Secretary existingSecretary, String newNumber) {
         Optional.ofNullable(newNumber)
                 .filter(number -> !number.equals(existingSecretary.getTelNumber()))
