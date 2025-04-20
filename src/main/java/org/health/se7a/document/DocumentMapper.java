@@ -1,6 +1,8 @@
 package org.health.se7a.document;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class DocumentMapper {
 
@@ -28,5 +30,10 @@ public class DocumentMapper {
                         .uploadedAt(d.getUploadedAt())
                         .build())
                 .orElse(null);
+    }
+    public static List<MedicalDocumentResponseDTO> toDtoList(List<MedicalDocument> list) {
+        return list == null ? null : list.stream()
+                .map(DocumentMapper::toDto)
+                .collect(Collectors.toList());
     }
 }

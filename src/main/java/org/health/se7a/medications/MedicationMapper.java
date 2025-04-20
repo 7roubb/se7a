@@ -5,7 +5,9 @@ import org.health.se7a.patients.PatientMapper;
 import org.health.se7a.patients.Patients;
 import org.health.se7a.nurse.Nurse;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class MedicationMapper {
 
@@ -36,5 +38,10 @@ public class MedicationMapper {
                     return medication;
                 })
                 .orElse(null);
+    }
+    public static List<MedicationResponseDTO> toDtoList(List<Medication> list) {
+        return list == null ? null : list.stream()
+                .map(MedicationMapper::toResponse)
+                .collect(Collectors.toList());
     }
 }

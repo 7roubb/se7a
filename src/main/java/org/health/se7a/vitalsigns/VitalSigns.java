@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.health.se7a.nurse.Nurse;
 import org.health.se7a.patients.Patients;
+import org.health.se7a.visits.MedicalVisit;
 
 import java.time.LocalDateTime;
 
@@ -32,4 +33,7 @@ public class VitalSigns {
     private Double temperature;
     private Integer respiratoryRate;
     private LocalDateTime recordedAt;
+
+    @ManyToOne
+    private MedicalVisit visit;
 }
