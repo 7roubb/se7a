@@ -44,33 +44,41 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     @Transactional
-    public Boolean updateDocument(MedicalDocumentRequestDTO requestDTO) {
-        MedicalDocument existing = documentRepository.findByFileName(requestDTO.getFile().getOriginalFilename())
-                .orElseThrow(() -> notFoundException(requestDTO.getFile().getOriginalFilename(), "document.notfound"));
+    public Boolean updateDocument(Long docId, MedicalDocumentRequestDTO requestDTO) {
+        MedicalDocument document = documentRepository.findById(docId)
+                .orElseThrow(() -> notFoundException(docId, "document.notfound"));
 
         try {
-            existing.setFileType(requestDTO.getFile().getContentType());
-            existing.setFileSize(requestDTO.getFile().getSize());
-            existing.setData(requestDTO.getFile().getBytes());
-            existing.setUploadedAt(LocalDateTime.now());
+            document.setFileType(requestDTO.getFile().getContentType());
+            document.setFileSize(requestDTO.getFile().getSize());
+            document.setData(requestDTO.getFile().getBytes());
+            document.setUploadedAt(LocalDateTime.now());
 
-            documentRepository.save(existing);
+            documentRepository.save(document);
             return true;
+
         } catch (IOException e) {
-            throw new XppException(List.of(requestDTO.getFile().getOriginalFilename()), HttpStatus.INTERNAL_SERVER_ERROR, "document.update.failed");
+            throw new XppException(
+                    List.of(requestDTO.getFile().getOriginalFilename()),
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "document.update.failed"
+            );
         }
     }
 
+
     @Override
     @Transactional
-    public Boolean deleteDocument(MedicalDocumentRequestDTO requestDTO) {
-        MedicalDocument existing = documentRepository.findByFileName(requestDTO.getFile().getOriginalFilename())
-                .orElseThrow(() -> notFoundException(requestDTO.getFile().getOriginalFilename(), "document.notfound"));
-        documentRepository.delete(existing);
+    public Boolean deleteDocument(Long id) {
+        MedicalDocument document = documentRepository.findById(id)
+                .orElseThrow(() -> notFoundException(id, "document.notfound"));
+
+        documentRepository.delete(document);
         return true;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MedicalDocumentResponseDTO getDocumentById(Long id) {
         return documentRepository.findById(id)
                 .map(DocumentMapper::toDto)
@@ -78,6 +86,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<MedicalDocumentResponseDTO> getDocumentByPatientNatId(String natId, Pageable pageable) {
         Patients patient = patientService.getPatientByNatId(natId);
         return documentRepository.findByPatientId(patient.getId(), pageable)

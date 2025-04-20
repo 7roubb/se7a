@@ -23,7 +23,9 @@ public class MedicalDocument {
     private Long fileSize;
 
     @Lob
+    @Basic(fetch = FetchType.EAGER)
     private byte[] data;
+
 
     @ManyToOne
     @JoinColumn(name = "patient_id")

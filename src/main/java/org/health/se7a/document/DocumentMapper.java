@@ -12,6 +12,7 @@ public class DocumentMapper {
                         .fileType(d.getFileType())
                         .fileSize(d.getFileSize())
                         .uploadedAt(d.getUploadedAt())
+                        .fileData(d.getData())
                         .patientId(d.getPatient() != null ? d.getPatient().getId() : null)
                         .build())
                 .orElse(null);

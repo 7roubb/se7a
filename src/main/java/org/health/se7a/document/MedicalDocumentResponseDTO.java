@@ -16,4 +16,5 @@ public class MedicalDocumentResponseDTO {
     private Long fileSize;
     private Long patientId;
     private LocalDateTime uploadedAt;
+    private byte[] fileData;
 }

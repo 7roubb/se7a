@@ -29,6 +29,18 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
+    public Boolean loggedInUserIsAdminOrDoctor() {
+        return loggedInUserIsAdmin() || loggedInUserIsDoctor();
+    }
+
+
+    @Override
+    public Boolean loggedInUserIsAdminOrSecretary() {
+        return loggedInUserIsAdmin() || loggedInUserIsSecretary();
+    }
+
+
+    @Override
     public Boolean loggedInUserIsAdminOrNurse() {
         return loggedInUserIsAdmin() || loggedInUserIsNurse();
     }

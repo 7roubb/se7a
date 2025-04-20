@@ -14,6 +14,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -81,6 +82,21 @@ public class XppExceptionHandler {
         );
 
         return new ResponseEntity<>(response,HttpStatus.FORBIDDEN );    }
+
+
+    @ExceptionHandler({ MaxUploadSizeExceededException.class, IllegalStateException.class })
+    public ResponseEntity<XppResponse<Object>> handleUploadExceptions(Exception ex) {
+        String errorMessage = messageSource.getMessage(
+                "exception.upload.too-large",
+                null,
+                LocaleContextHolder.getLocale()
+        );
+
+        XppResponse<Object> response = XppResponse.map(null, HttpStatus.PAYLOAD_TOO_LARGE, errorMessage);
+
+        return new ResponseEntity<>(response, HttpStatus.PAYLOAD_TOO_LARGE);
+    }
+
 
 
     @ExceptionHandler(UnrecognizedPropertyException.class)

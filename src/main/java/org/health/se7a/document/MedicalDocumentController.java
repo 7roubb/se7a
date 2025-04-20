@@ -18,7 +18,7 @@ public class MedicalDocumentController {
     private final DocumentService documentService;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("@authorizationService.loggedInUserIsNurse()")
+    @PreAuthorize("@authorizationService.loggedInUserIsSecretary()")
     public XppResponseEntity<Boolean> uploadDocument(
             @Validated(OnCreate.class) MedicalDocumentRequestDTO requestDTO
     ) {
@@ -26,29 +26,28 @@ public class MedicalDocumentController {
     }
 
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("@authorizationService.loggedInUserIsNurse()")
+    @PreAuthorize("@authorizationService.loggedInUserIsSecretary()")
     public XppResponseEntity<Boolean> updateDocument(
+            @RequestParam Long id,
             @Validated(OnCreate.class) MedicalDocumentRequestDTO requestDTO
     ) {
-        return XppResponseEntity.map(documentService.updateDocument(requestDTO));
+        return XppResponseEntity.map(documentService.updateDocument(id,requestDTO));
     }
 
-    @DeleteMapping
-    @PreAuthorize("@authorizationService.loggedInUserIsNurse()")
+    @DeleteMapping("/{id}")
+    @PreAuthorize("@authorizationService.loggedInUserIsSecretary()")
     public XppResponseEntity<Boolean> deleteDocument(
-            @Validated(OnCreate.class) MedicalDocumentRequestDTO requestDTO
+            @PathVariable Long id
     ) {
-        return XppResponseEntity.map(documentService.deleteDocument(requestDTO));
+        return XppResponseEntity.map(documentService.deleteDocument(id));
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("@authorizationService.loggedInUserIsAdminOrNurse()")
     public XppResponseEntity<MedicalDocumentResponseDTO> getDocumentById(@PathVariable Long id) {
         return XppResponseEntity.map(documentService.getDocumentById(id));
     }
 
     @GetMapping("/patient/{natId}")
-    @PreAuthorize("@authorizationService.loggedInUserIsAdminOrNurse()")
     public XppResponseEntity<Page<MedicalDocumentResponseDTO>> getDocumentsByPatientNatId(
             Pageable pageable,
             @PathVariable String natId
