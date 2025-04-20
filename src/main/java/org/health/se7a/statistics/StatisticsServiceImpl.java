@@ -7,6 +7,7 @@ import org.health.se7a.vitalsigns.VitalSignsRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
@@ -34,8 +35,13 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public byte[] exportStatisticsAsPdf(StatisticsRequestDTO dto) {
+    public ExportedPdfDTO exportStatisticsAsPdf(StatisticsRequestDTO dto) {
         StatisticsResponseDTO stats = getStatistics(dto);
-        return PdfGenerator.generateAdvancedStatisticsPdf(stats,"/home/osama/Desktop/se7a/src/main/resources/static/images/logo.png");
+        byte[] pdfBytes = PdfGenerator.generateAdvancedStatisticsPdf(
+                stats, "/home/osama/Desktop/se7a/src/main/resources/static/images/logo.png");
+
+        String base64Pdf = Base64.getEncoder().encodeToString(pdfBytes);
+        return new ExportedPdfDTO(base64Pdf);
     }
+
 }
