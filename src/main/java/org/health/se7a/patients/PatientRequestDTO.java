@@ -34,4 +34,5 @@ public class PatientRequestDTO {
     private Gender gender;
 
     private List<ChronicDisease> chronicDiseases;
+    private SmokingStatus smokingStatus;
 }

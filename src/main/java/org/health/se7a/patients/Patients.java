@@ -74,4 +74,6 @@ public class Patients {
     @Column(name = "disease")
     private List<ChronicDisease> chronicDiseases;
 
+    @Enumerated(EnumType.STRING)
+    private SmokingStatus smokingStatus;
 }

@@ -2,9 +2,6 @@ package org.health.se7a.statistics;
 
 import lombok.RequiredArgsConstructor;
 import org.health.se7a.common.XppResponseEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +16,7 @@ public class StatisticsController {
     @PostMapping
     @PreAuthorize("@authorizationService.loggedInUserIsSecretary()")
     public XppResponseEntity<StatisticsResponseDTO> getStats(@RequestBody @Validated StatisticsRequestDTO dto) {
-        StatisticsResponseDTO stats = statisticsService.getStatistics(dto);
+        StatisticsResponseDTO stats = statisticsService.generateAdvancedStats(dto);
         return XppResponseEntity.map(stats);
     }
 

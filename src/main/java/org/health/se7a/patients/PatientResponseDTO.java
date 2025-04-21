@@ -23,5 +23,6 @@ public class PatientResponseDTO {
     private List<DoctorDTO> doctors;
     private List<NurseDTO> nurses;
     private List<ChronicDisease> chronicDiseases;
+    private SmokingStatus smokingStatus;
 
 }
