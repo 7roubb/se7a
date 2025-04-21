@@ -9,6 +9,9 @@ import org.health.se7a.patients.Patients;
 import org.health.se7a.nurse.Nurse;
 import org.health.se7a.nurse.NurseRepository;
 import org.health.se7a.security.util.SecurityContextUtil;
+import org.health.se7a.visits.MedicalVisit;
+import org.health.se7a.visits.MedicalVisitMapper;
+import org.health.se7a.visits.MedicalVisitService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -23,6 +26,7 @@ public class VitalServiceImpl implements VitalService {
     private final VitalSignsRepository vitalSignsRepository;
     private final NurseService nurseService;
     private final PatientService patientService;
+    private final MedicalVisitService medicalVisitService;
 
     @Override
     @Transactional
@@ -46,13 +50,14 @@ public class VitalServiceImpl implements VitalService {
 
     @Override
     @Transactional
-    public Boolean createVitalSigns(VitalSignsDTO vitalSignsDTO) {
+    public Boolean createVitalSigns(Long visitId,VitalSignsDTO vitalSignsDTO) {
         Patients patient = patientService.getPatientByNatId(vitalSignsDTO.getPatientNatId());
         Nurse nurse = nurseService.getNurse();
         if (!patient.getNurses().contains(nurse)) {
             patient.getNurses().add(nurse);
         }
         VitalSigns vitalSigns = VitalSignsMapper.toEntity(vitalSignsDTO, patient, nurse);
+        vitalSigns.setVisit(medicalVisitService.getMedicalVisitById(visitId));
         vitalSignsRepository.save(vitalSigns);
         return true;
     }

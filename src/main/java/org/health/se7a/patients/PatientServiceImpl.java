@@ -2,12 +2,6 @@ package org.health.se7a.patients;
 
 import lombok.RequiredArgsConstructor;
 import org.health.se7a.exception.XppException;
-import org.health.se7a.medications.*;
-import org.health.se7a.nurse.Nurse;
-import org.health.se7a.nurse.NurseMapper;
-import org.health.se7a.nurse.NurseRepository;
-import org.health.se7a.nurse.NurseService;
-import org.health.se7a.security.util.SecurityContextUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;

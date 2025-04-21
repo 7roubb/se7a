@@ -3,7 +3,11 @@ package org.health.se7a.labtests;
 import org.health.se7a.nurse.NurseMapper;
 import org.health.se7a.patients.PatientMapper;
 import org.health.se7a.patients.Patients;
+import org.health.se7a.vitalsigns.VitalSigns;
+import org.health.se7a.vitalsigns.VitalSignsMapper;
+import org.health.se7a.vitalsigns.VitalSignsResponseDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,7 +22,6 @@ public class LabTestMapper {
                         .result(l.getResult())
                         .testDate(l.getTestDate())
                         .nurse(NurseMapper.toDto(l.getNurse()))
-                        .patient(PatientMapper.toDto(l.getPatient()))
                         .build())
                 .orElse(null);
     }

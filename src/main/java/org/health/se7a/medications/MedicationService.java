@@ -3,7 +3,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface MedicationService {
-    Boolean addMedication(MedicationDTO medication);
+    Boolean addMedication(Long visitId,MedicationDTO medication);
     Boolean updateMedication(Long id,MedicationDTO medication);
     Boolean deleteMedication(Long id);
     MedicationResponseDTO findMedicationById(Long id);

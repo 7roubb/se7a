@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface LabTestService {
-    Boolean createLabTest(LabTestDTO labTestDTO);
+    Boolean createLabTest(Long visitId,LabTestDTO labTestDTO);
     Boolean updateLabTest(Long id,LabTestDTO labTestDTO);
     Boolean deleteLabTest(Long id);
     Page<LabTestResponseDTO> getLabTestsByPatientNatId(String natId, Pageable pageable);

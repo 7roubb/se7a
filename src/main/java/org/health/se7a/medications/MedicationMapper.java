@@ -17,7 +17,6 @@ public class MedicationMapper {
                         .id(m.getId())
                         .drugName(m.getDrugName())
                         .dosage(m.getDosage())
-                        .patient(PatientMapper.toDto(m.getPatient()))
                         .nurse(NurseMapper.toDto(m.getNurse()))
                         .administrationMethod(m.getAdministrationMethod())
                         .administeredAt(m.getAdministeredAt())

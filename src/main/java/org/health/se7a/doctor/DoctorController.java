@@ -47,7 +47,6 @@ public class DoctorController {
         return XppResponseEntity.map(updatedDoctor);
     }
     @GetMapping("/lookup")
-    @PreAuthorize("@authorizationService.loggedInUserIsAdminOrNurse()")
     public XppResponseEntity<List<DoctorLookupDTO>> getDoctorLookup() {
         return XppResponseEntity.map(doctorService.getAllDoctorsForLookup());
     }

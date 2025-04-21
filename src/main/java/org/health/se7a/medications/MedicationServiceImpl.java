@@ -7,6 +7,7 @@ import org.health.se7a.nurse.NurseService;
 import org.health.se7a.patients.PatientService;
 import org.health.se7a.patients.Patients;
 import org.health.se7a.security.util.SecurityContextUtil;
+import org.health.se7a.visits.MedicalVisitService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -24,13 +25,15 @@ public class MedicationServiceImpl implements MedicationService {
     private final MedicationRepository medicationRepository;
     private final NurseService nurseService;
     private final PatientService patientService;
+    private final MedicalVisitService medicalVisitService;
 
     @Override
-    public Boolean addMedication(MedicationDTO medicationDTO) {
+    public Boolean addMedication(Long visitId,MedicationDTO medicationDTO) {
         Patients patient = patientService.getPatientByNatId(medicationDTO.getPatientNatId());
         Nurse nurse = nurseService.getNurse();
         Medication medication = MedicationMapper.toEntity(medicationDTO,patient,nurse);
         medication.setAdministeredAt(LocalDateTime.now());
+        medication.setVisit(medicalVisitService.getMedicalVisitById(visitId));
         medicationRepository.save(medication);
         return true;
     }

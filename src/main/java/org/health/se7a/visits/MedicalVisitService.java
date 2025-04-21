@@ -10,5 +10,6 @@ public interface MedicalVisitService {
     Long createMedicalVisit(MedicalVisitRequestDTO medicalVisit);
     Boolean updateMedicalVisit(Long id,MedicalVisitRequestDTO medicalVisit);
     Boolean deleteMedicalVisit(Long id);
+    MedicalVisit getMedicalVisitById(Long id);
 
 }

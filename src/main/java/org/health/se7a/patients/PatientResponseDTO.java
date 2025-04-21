@@ -22,4 +22,6 @@ public class PatientResponseDTO {
     private Gender gender;
     private List<DoctorDTO> doctors;
     private List<NurseDTO> nurses;
+    private List<ChronicDisease> chronicDiseases;
+
 }

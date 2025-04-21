@@ -7,6 +7,7 @@ import org.health.se7a.patients.Patients;
 import org.health.se7a.patients.PatientService;
 import org.health.se7a.nurse.NurseService;
 import org.health.se7a.security.util.SecurityContextUtil;
+import org.health.se7a.visits.MedicalVisitService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -24,14 +25,16 @@ public class LabTestServiceImpl implements LabTestService {
     private final LabTestRepository labTestRepository;
     private final NurseService nurseService;
     private final PatientService patientService;
+    private final MedicalVisitService medicalVisitService;
 
     @Override
-    public Boolean createLabTest(LabTestDTO labTestDTO) {
+    public Boolean createLabTest(Long visitId,LabTestDTO labTestDTO) {
         Patients patient = patientService.getPatientByNatId(labTestDTO.getPatientNatId());
         Nurse nurse = nurseService.getNurse();
         LabTest labTest = LabTestMapper.toEntity(labTestDTO, patient);
         labTest.setTestDate(LocalDateTime.now());
         labTest.setNurse(nurse);
+        labTest.setVisit(medicalVisitService.getMedicalVisitById(visitId));
         labTestRepository.save(labTest);
         return true;
     }

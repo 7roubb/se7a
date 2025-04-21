@@ -65,4 +65,13 @@ public class Patients {
     private List<Nurse> nurses;
 
 
+    @ElementCollection(targetClass = ChronicDisease.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(
+            name = "patient_chronic_diseases",
+            joinColumns = @JoinColumn(name = "patient_id")
+    )
+    @Column(name = "disease")
+    private List<ChronicDisease> chronicDiseases;
+
 }

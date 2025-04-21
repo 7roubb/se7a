@@ -29,8 +29,8 @@ public class PatientController {
         return XppResponseEntity.map(patientService.getPatient(id));
     }
 
-    @GetMapping("/public")
-    public XppResponseEntity<PatientResponseDTO> getPatientById(@RequestParam String natId) {
+    @GetMapping("/id/{natId}")
+    public XppResponseEntity<PatientResponseDTO> getPatientById(@PathVariable String natId) {
         return XppResponseEntity.map(patientService.getPatient(natId));
     }
 

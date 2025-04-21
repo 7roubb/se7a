@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MedicationResponseDTO {
     private Long id;
-    private PatientResponseDTO patient;
     private String drugName;
     private Double dosage;
     private String administrationMethod;

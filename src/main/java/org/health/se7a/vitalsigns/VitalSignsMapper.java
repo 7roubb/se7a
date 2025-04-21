@@ -1,8 +1,6 @@
 package org.health.se7a.vitalsigns;
 
-import org.health.se7a.nurse.NurseDTO;
 import org.health.se7a.nurse.NurseMapper;
-import org.health.se7a.patients.PatientMapper;
 import org.health.se7a.patients.Patients;
 import org.health.se7a.nurse.Nurse;
 
@@ -17,7 +15,6 @@ public class VitalSignsMapper {
                 .map(v -> VitalSignsResponseDTO.builder()
                         .bloodPressure(v.getBloodPressure())
                         .heartRate(v.getHeartRate())
-                        .patient(PatientMapper.toDto(v.getPatient()))
                         .nurse(NurseMapper.toDto(v.getNurse()))
                         .temperature(v.getTemperature())
                         .respiratoryRate(v.getRespiratoryRate())

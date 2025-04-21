@@ -24,8 +24,8 @@ public class LabTestController {
 
     @PostMapping
     @PreAuthorize("@authorizationService.loggedInUserIsNurse()")
-    public XppResponseEntity<Boolean> createLabTest(@RequestBody @Validated(OnCreate.class) LabTestDTO labTestDTO) {
-        return XppResponseEntity.map(labTestService.createLabTest(labTestDTO));
+    public XppResponseEntity<Boolean> createLabTest(@RequestParam Long visitId,@RequestBody @Validated(OnCreate.class) LabTestDTO labTestDTO) {
+        return XppResponseEntity.map(labTestService.createLabTest(visitId,labTestDTO));
     }
 
     @PutMapping("/{id}")

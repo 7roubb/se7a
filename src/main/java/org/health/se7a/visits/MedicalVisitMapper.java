@@ -2,17 +2,15 @@ package org.health.se7a.visits;
 
 import org.health.se7a.doctor.Doctor;
 import org.health.se7a.doctor.DoctorMapper;
-import org.health.se7a.diagnosis.DiagnosisMapper;
 import org.health.se7a.document.DocumentMapper;
-import org.health.se7a.document.MedicalDocumentMapper;
 import org.health.se7a.labtests.LabTestMapper;
 import org.health.se7a.medications.MedicationMapper;
+import org.health.se7a.patients.PatientMapper;
 import org.health.se7a.patients.Patients;
 import org.health.se7a.vitalsigns.VitalSignsMapper;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class MedicalVisitMapper {
 
@@ -26,6 +24,7 @@ public class MedicalVisitMapper {
                         .attendingPhysician(DoctorMapper.toDto(v.getAttendingPhysician()))
                         .vitalSigns(VitalSignsMapper.toDtoList(v.getVitalSigns()))
                         .diagnosis(v.getDiagnosis())
+                        .patient(PatientMapper.toDto(visit.getPatients()))
                         .medications(MedicationMapper.toDtoList(v.getMedications()))
                         .labTests(LabTestMapper.toDtoList(v.getLabTests()))
                         .documents(DocumentMapper.toDtoList(v.getDocuments()))
@@ -39,6 +38,7 @@ public class MedicalVisitMapper {
                         .visitDate(LocalDateTime.parse(req.getVisitDate()))
                         .visitReason(req.getVisitReason())
                         .notes(req.getNotes())
+                        .patients(patient)
                         .attendingPhysician(doctor)
                         .build())
                 .orElse(null);

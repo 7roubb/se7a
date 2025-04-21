@@ -1,5 +1,6 @@
 package org.health.se7a.vitalsigns;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -35,5 +36,6 @@ public class VitalSigns {
     private LocalDateTime recordedAt;
 
     @ManyToOne
+    @JsonIgnore
     private MedicalVisit visit;
 }

@@ -18,7 +18,6 @@ public class VitalSignsResponseDTO {
 
     private Long id;
 
-    private PatientResponseDTO patient;
 
     private NurseDTO nurse;
 

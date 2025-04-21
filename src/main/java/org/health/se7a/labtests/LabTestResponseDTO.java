@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.health.se7a.nurse.NurseDTO;
-import org.health.se7a.patients.PatientResponseDTO;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +15,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class LabTestResponseDTO {
     private Long id;
-    private PatientResponseDTO patient;
     private NurseDTO nurse;
     private String testName;
     private String result;

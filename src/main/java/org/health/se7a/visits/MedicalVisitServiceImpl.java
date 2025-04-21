@@ -28,7 +28,7 @@ public class MedicalVisitServiceImpl implements MedicalVisitService {
     @Override
     public Page<MedicalVisitResponseDTO> getMedicalVisits(String natId, Pageable pageable) {
         return medicalVisitRepository
-                .findByPatient_NationalityID(natId, pageable)
+                .getMedicalVisitByPatients_NationalityID(natId, pageable)
                 .map(MedicalVisitMapper::toResponse);
     }
 
@@ -76,5 +76,11 @@ public class MedicalVisitServiceImpl implements MedicalVisitService {
 
     private XppException notFoundException(Object identifier, String messageKey) {
         return new XppException(List.of(identifier), HttpStatus.NOT_FOUND, messageKey);
+    }
+
+    @Override
+    public MedicalVisit getMedicalVisitById(Long id) {
+        return medicalVisitRepository.findById(id)
+                .orElseThrow(() -> notFoundException(id, "medical.visit.not.found"));
     }
 }

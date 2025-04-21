@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import org.health.se7a.common.OnCreate;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -30,4 +32,6 @@ public class PatientRequestDTO {
 
     @NotNull(message = "{patient.gender.notNull}")
     private Gender gender;
+
+    private List<ChronicDisease> chronicDiseases;
 }

@@ -25,8 +25,8 @@ public class MedicationController {
 
     @PostMapping
     @PreAuthorize("@authorizationService.loggedInUserIsNurse()")
-    public XppResponseEntity<Boolean> addMedication(@RequestBody @Validated(OnCreate.class) MedicationDTO medicationDTO) {
-        return XppResponseEntity.map(medicationService.addMedication(medicationDTO));
+    public XppResponseEntity<Boolean> addMedication(@RequestParam Long visitId,@RequestBody @Validated(OnCreate.class) MedicationDTO medicationDTO) {
+        return XppResponseEntity.map(medicationService.addMedication(visitId,medicationDTO));
     }
 
     @PutMapping("/{id}")

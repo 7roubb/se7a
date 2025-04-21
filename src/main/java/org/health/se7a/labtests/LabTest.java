@@ -1,9 +1,11 @@
 package org.health.se7a.labtests;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.health.se7a.nurse.Nurse;
 import org.health.se7a.patients.Patients;
+import org.health.se7a.visits.MedicalVisit;
 
 import java.time.LocalDateTime;
 
@@ -29,4 +31,9 @@ public class LabTest {
     private String testName;
     private String result;
     private LocalDateTime testDate;
+
+
+    @ManyToOne
+    @JsonIgnore
+    private MedicalVisit visit;
 }

@@ -1,6 +1,7 @@
 package org.health.se7a.visits;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.health.se7a.diagnosis.Diagnosis;
@@ -8,6 +9,7 @@ import org.health.se7a.doctor.Doctor;
 import org.health.se7a.document.MedicalDocument;
 import org.health.se7a.labtests.LabTest;
 import org.health.se7a.medications.Medication;
+import org.health.se7a.patients.Patients;
 import org.health.se7a.vitalsigns.VitalSigns;
 
 import java.time.LocalDateTime;
@@ -28,6 +30,11 @@ public class MedicalVisit {
     private LocalDateTime visitDate;
     private String visitReason;
     private String notes;
+
+
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patients patients;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id")

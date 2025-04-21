@@ -36,8 +36,8 @@ public class VitalSignsController {
 
     @PostMapping
     @PreAuthorize("@authorizationService.loggedInUserIsNurse()")
-    public XppResponseEntity<Boolean> createVitalSigns(@RequestBody @Validated(OnCreate.class) VitalSignsDTO vitalSignsDTO) {
-        return XppResponseEntity.map(vitalService.createVitalSigns(vitalSignsDTO));
+    public XppResponseEntity<Boolean> createVitalSigns(@RequestBody @Validated(OnCreate.class)  VitalSignsDTO vitalSignsDTO,@RequestParam Long visitId) {
+        return XppResponseEntity.map(vitalService.createVitalSigns(visitId,vitalSignsDTO));
     }
 
     @PutMapping("/{id}")

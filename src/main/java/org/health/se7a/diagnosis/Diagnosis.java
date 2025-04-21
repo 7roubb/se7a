@@ -4,6 +4,7 @@ import lombok.*;
 import org.health.se7a.doctor.Doctor;
 import org.health.se7a.document.MedicalDocument;
 import org.health.se7a.patients.Patients;
+import org.health.se7a.visits.MedicalVisit;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,6 +32,7 @@ public class Diagnosis {
     private String notes;
     private LocalDateTime recordedAt;
 
-    @OneToMany(mappedBy = "diagnosis", cascade = CascadeType.ALL)
-    private List<MedicalDocument> supportingDocuments;
+
+    @ManyToOne
+    private MedicalVisit visit;
 }
