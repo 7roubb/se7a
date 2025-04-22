@@ -143,7 +143,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Override // إضافة annotation
     public ExportedPdfDTO exportStatisticsAsPdf(StatisticsRequestDTO dto) {
         StatisticsResponseDTO stats = generateAdvancedStats(dto);
-        byte[] pdfBytes = PdfGenerator.generateAdvancedReport(stats, "path/to/logo.png");
+        byte[] pdfBytes = PdfGenerator.generateAdvancedReport(stats, "/home/osama/Desktop/se7a/src/main/resources/static/images/logo.png");
         String base64Pdf = Base64.getEncoder().encodeToString(pdfBytes);
 
         ExportedPdfDTO response = new ExportedPdfDTO();

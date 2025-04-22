@@ -2,12 +2,10 @@ package org.health.se7a.diagnosis;
 import jakarta.persistence.*;
 import lombok.*;
 import org.health.se7a.doctor.Doctor;
-import org.health.se7a.document.MedicalDocument;
 import org.health.se7a.patients.Patients;
 import org.health.se7a.visits.MedicalVisit;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
