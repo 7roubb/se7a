@@ -18,9 +18,6 @@ public class DiagnosisDTO {
     @NotNull(message = "{diagnosis.patientNatId.notnull}", groups = OnCreate.class)
     private String patientNatId;
 
-    @NotNull(message = "{diagnosis.doctorNatId.notnull}", groups = OnCreate.class)
-    private Long doctorId;
-
     @NotNull(message = "{diagnosis.details.notnull}", groups = OnCreate.class)
     @Size(min = 2, max = 1000, message = "{diagnosis.details.size}", groups = OnCreate.class)
     private String diagnosisDetails;

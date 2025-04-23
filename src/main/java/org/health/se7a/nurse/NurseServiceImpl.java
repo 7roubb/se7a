@@ -54,10 +54,7 @@ public class NurseServiceImpl implements NurseService {
         Nurse existingNurse = nurseRepository.findById(nurseDTO.getId())
                 .orElseThrow(() -> notFoundException(nurseDTO.getId(), "nurse.not.found"));
         validatePhoneNumberUpdate(existingNurse, nurseDTO.getTelNumber());
-
         updateNurseDetails(existingNurse, nurseDTO);
-
-
         return true;
     }
 

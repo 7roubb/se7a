@@ -9,4 +9,5 @@ public interface SecretaryService {
     Boolean deleteSecretary(Long secretaryId);
     SecretaryDTO getSecretary(Long secretaryId);
     Page<SecretaryDTO> getAllSecretaries(Pageable pageable);
+    Secretary getSecretary();
 }

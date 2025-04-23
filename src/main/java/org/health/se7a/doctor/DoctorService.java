@@ -12,5 +12,6 @@ public interface DoctorService {
     DoctorDTO getDoctorById(Long id);
     Page<DoctorDTO> getAllDoctors(Pageable page);
     List<DoctorLookupDTO> getAllDoctorsForLookup();
+    Doctor getDoctor();
 
 }

@@ -3,8 +3,10 @@ package org.health.se7a.doctor;
 import lombok.RequiredArgsConstructor;
 import org.health.se7a.entity.EntityService;
 import org.health.se7a.exception.XppException;
+import org.health.se7a.nurse.Nurse;
 import org.health.se7a.security.model.AccountStatus;
 import org.health.se7a.security.model.LoginType;
+import org.health.se7a.security.util.SecurityContextUtil;
 import org.health.se7a.users.UserRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -99,6 +101,12 @@ public class DoctorServiceImpl implements DoctorService {
                 .ifPresent(this::validateDoctorPhoneNumberUniqueness);
     }
 
+    @Override
+    public Doctor getDoctor() {
+        return doctorRepository.findById(loggedInUserId())
+                .orElseThrow(() -> notFoundException(loggedInUserId(), "doctor.not.found"));
+    }
+
     private void updateDoctorDetails(Doctor doctor, DoctorDTO doctorDTO) {
         String oldPhoneNumber = doctor.getTelNumber();
         String newPhoneNumber = doctorDTO.getTelNumber();
@@ -115,4 +123,9 @@ public class DoctorServiceImpl implements DoctorService {
         doctor.setUpdatedAt(LocalDateTime.now());
         doctorRepository.save(doctor);
     }
+
+    private Long loggedInUserId() {
+        return SecurityContextUtil.loggedUser().getId();
+    }
+
 }

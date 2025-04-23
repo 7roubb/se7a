@@ -20,8 +20,6 @@ public class VitalSignsDTO {
     @NotNull(message = "{vitals.patient.notnull}", groups = OnCreate.class)
     private String patientNatId;
 
-    private Long nurseId;
-
     @Positive(message = "{vitals.bloodPressure.positive}", groups = {OnCreate.class, OnUpdate.class})
     @DecimalMin(value = "40.0", message = "{vitals.bloodPressure.min}", groups = {OnCreate.class, OnUpdate.class})
     @DecimalMax(value = "200.0", message = "{vitals.bloodPressure.max}", groups = {OnCreate.class, OnUpdate.class})

@@ -1,10 +1,12 @@
 package org.health.se7a.secretary;
 
 import lombok.RequiredArgsConstructor;
+import org.health.se7a.doctor.Doctor;
 import org.health.se7a.entity.EntityService;
 import org.health.se7a.exception.XppException;
 import org.health.se7a.security.model.AccountStatus;
 import org.health.se7a.security.model.LoginType;
+import org.health.se7a.security.util.SecurityContextUtil;
 import org.health.se7a.users.UserRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -112,4 +114,16 @@ public class SecretaryServiceImp implements SecretaryService {
         secretary.setUpdatedAt(LocalDateTime.now());
         secretaryRepository.save(secretary);
     }
+
+    @Override
+    public Secretary getSecretary() {
+        return secretaryRepository.findById(loggedInUserId())
+                .orElseThrow(() -> notFoundException(loggedInUserId(), "secretary.not.found"));
+    }
+
+    private Long loggedInUserId() {
+        return SecurityContextUtil.loggedUser().getId();
+    }
+
+
 }

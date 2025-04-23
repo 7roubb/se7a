@@ -15,8 +15,6 @@ public class MedicalAssistanceDTO {
 
     private Long id;
 
-    @NotNull(message = "{assistance.nurseId.notnull}", groups = OnCreate.class)
-    private Long nurseId;
 
     @NotNull(message = "{assistance.doctorId.notnull}", groups = OnCreate.class)
     private Long doctorId;
