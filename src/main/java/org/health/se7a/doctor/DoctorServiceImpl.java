@@ -38,9 +38,9 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     @Transactional
-    public Boolean updateDoctor(Long id, DoctorDTO doctorDTO) {
-        Doctor doctor = doctorRepository.findById(id)
-                .orElseThrow(() -> notFoundException(id, "doctor.not.found"));
+    public Boolean updateDoctor(DoctorDTO doctorDTO) {
+        Doctor doctor = doctorRepository.findById(doctorDTO.getId())
+                .orElseThrow(() -> notFoundException(doctorDTO.getId(), "doctor.not.found"));
 
         validatePhoneNumberUpdate(doctor, doctorDTO.getTelNumber());
         updateDoctorDetails(doctor, doctorDTO);

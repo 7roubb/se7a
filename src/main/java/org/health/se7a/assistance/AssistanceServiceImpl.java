@@ -38,9 +38,9 @@ public class AssistanceServiceImpl implements AssistanceService {
     }
 
     @Override
-    public Boolean UpdateAssistance(Long id,MedicalAssistanceDTO dto) {
-        MedicalAssistance assistance = repository.findById(id)
-                .orElseThrow(() -> notFoundException(id));
+    public Boolean UpdateAssistance(MedicalAssistanceDTO dto) {
+        MedicalAssistance assistance = repository.findById(dto.getId())
+                .orElseThrow(() -> notFoundException(dto.getId()));
         assistance.setNotes(dto.getNotes());
         assistance.setToolsPrepared(dto.getToolsPrepared());
         if (dto.getDoctorId() != null) {

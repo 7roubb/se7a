@@ -44,9 +44,9 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     @Transactional
-    public Boolean updateDocument(Long docId, MedicalDocumentRequestDTO requestDTO) {
-        MedicalDocument document = documentRepository.findById(docId)
-                .orElseThrow(() -> notFoundException(docId, "document.notfound"));
+    public Boolean updateDocument(MedicalDocumentRequestDTO requestDTO) {
+        MedicalDocument document = documentRepository.findById(requestDTO.getId())
+                .orElseThrow(() -> notFoundException(requestDTO.getId(), "document.notfound"));
 
         try {
             document.setFileType(requestDTO.getFile().getContentType());

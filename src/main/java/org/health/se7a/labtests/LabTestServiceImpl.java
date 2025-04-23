@@ -41,9 +41,9 @@ public class LabTestServiceImpl implements LabTestService {
 
     @Override
     @Transactional
-    public Boolean updateLabTest(Long id, LabTestDTO labTestDTO) {
-        LabTest existingTest = labTestRepository.findById(id)
-                .orElseThrow(() -> notFoundException(id, "labtest.not.found"));
+    public Boolean updateLabTest(LabTestDTO labTestDTO) {
+        LabTest existingTest = labTestRepository.findById(labTestDTO.getId())
+                .orElseThrow(() -> notFoundException(labTestDTO.getId(), "labtest.not.found"));
         updateLabTestDetails(existingTest, labTestDTO);
         return true;
     }

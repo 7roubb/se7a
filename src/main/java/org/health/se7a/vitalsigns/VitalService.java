@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 
 
 public interface VitalService {
-    Boolean updateVitalSigns(Long id,VitalSignsDTO vitalSigns);
+    Boolean updateVitalSigns(VitalSignsDTO vitalSigns);
     Boolean deleteVitalSigns(Long id);
     Boolean createVitalSigns(Long visitId,VitalSignsDTO vitalSigns);
     Page<VitalSignsResponseDTO> getVitalSignsByPatient(String patientId, Pageable pageable);

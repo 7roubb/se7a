@@ -8,7 +8,7 @@ public interface MedicalVisitService {
     Page<MedicalVisitResponseDTO> getMedicalVisits(String natId,Pageable pageable);
     MedicalVisitResponseDTO getMedicalVisit(Long id);
     Long createMedicalVisit(MedicalVisitRequestDTO medicalVisit);
-    Boolean updateMedicalVisit(Long id,MedicalVisitRequestDTO medicalVisit);
+    Boolean updateMedicalVisit(MedicalVisitRequestDTO medicalVisit);
     Boolean deleteMedicalVisit(Long id);
     MedicalVisit getMedicalVisitById(Long id);
 

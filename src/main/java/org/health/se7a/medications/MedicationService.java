@@ -4,7 +4,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface MedicationService {
     Boolean addMedication(Long visitId,MedicationDTO medication);
-    Boolean updateMedication(Long id,MedicationDTO medication);
+    Boolean updateMedication(MedicationDTO medication);
     Boolean deleteMedication(Long id);
     MedicationResponseDTO findMedicationById(Long id);
     Page<MedicationResponseDTO> getMedicationByPatientNatId(String natId,Pageable pageable);

@@ -40,9 +40,9 @@ public class MedicationServiceImpl implements MedicationService {
 
     @Override
     @Transactional
-    public Boolean updateMedication(Long id, MedicationDTO medication) {
-        Medication existingMedication = medicationRepository.findById(id)
-                .orElseThrow(() -> notFoundException(id, "medication.not.found"));
+    public Boolean updateMedication(MedicationDTO medication) {
+        Medication existingMedication = medicationRepository.findById(medication.getId())
+                .orElseThrow(() -> notFoundException(medication.getId(), "medication.not.found"));
         updateMedicationDetails(existingMedication, medication);
         return true;
     }

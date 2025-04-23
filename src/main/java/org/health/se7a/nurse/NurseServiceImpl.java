@@ -50,9 +50,9 @@ public class NurseServiceImpl implements NurseService {
 
     @Override
     @Transactional
-    public Boolean updateNurse(Long id, NurseDTO nurseDTO) {
-        Nurse existingNurse = nurseRepository.findById(id)
-                .orElseThrow(() -> notFoundException(id, "nurse.not.found"));
+    public Boolean updateNurse(NurseDTO nurseDTO) {
+        Nurse existingNurse = nurseRepository.findById(nurseDTO.getId())
+                .orElseThrow(() -> notFoundException(nurseDTO.getId(), "nurse.not.found"));
         validatePhoneNumberUpdate(existingNurse, nurseDTO.getTelNumber());
 
         updateNurseDetails(existingNurse, nurseDTO);
@@ -79,7 +79,6 @@ public class NurseServiceImpl implements NurseService {
         Optional.ofNullable(nurseDTO.getName()).ifPresent(nurse::setName);
         Optional.ofNullable(newPhoneNumber).ifPresent(nurse::setTelNumber);
 
-        // Update user login info if phone number changed
         if (newPhoneNumber != null && !newPhoneNumber.equals(oldPhoneNumber)) {
             entityService.updateUserLoginInfoPhone(oldPhoneNumber, newPhoneNumber);
         }

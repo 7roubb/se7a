@@ -45,7 +45,8 @@ public class VitalSignsController {
     public XppResponseEntity<Boolean> updateVitalSigns(
             @PathVariable Long id,
             @RequestBody @Validated(OnUpdate.class) VitalSignsDTO vitalSignsDTO) {
-        return XppResponseEntity.map(vitalService.updateVitalSigns(id, vitalSignsDTO));
+        vitalSignsDTO.setId(id);
+        return XppResponseEntity.map(vitalService.updateVitalSigns(vitalSignsDTO));
     }
 
     @DeleteMapping("/{id}")

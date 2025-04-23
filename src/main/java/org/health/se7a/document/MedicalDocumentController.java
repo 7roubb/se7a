@@ -31,7 +31,8 @@ public class MedicalDocumentController {
             @RequestParam Long id,
             @Validated(OnCreate.class) MedicalDocumentRequestDTO requestDTO
     ) {
-        return XppResponseEntity.map(documentService.updateDocument(id,requestDTO));
+        requestDTO.setId(id);
+        return XppResponseEntity.map(documentService.updateDocument(requestDTO));
     }
 
     @DeleteMapping("/{id}")

@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface DocumentService {
     Boolean addDocument(MedicalDocumentRequestDTO document);
-    Boolean updateDocument(Long id,MedicalDocumentRequestDTO document) throws XppException;
+    Boolean updateDocument(MedicalDocumentRequestDTO document) throws XppException;
     Boolean deleteDocument(Long id);
     MedicalDocumentResponseDTO getDocumentById(Long id);
     Page<MedicalDocumentResponseDTO> getDocumentByPatientNatId(String natId, Pageable page);

@@ -31,5 +31,4 @@ public class DiagnosisDTO {
     @NotNull(message = "{diagnosis.recordedAt.notnull}", groups = OnCreate.class)
     private LocalDateTime recordedAt;
 
-    private Long visitId;
 }

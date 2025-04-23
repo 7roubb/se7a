@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 @Valid
 public class VitalSignsDTO {
+    private Long id;
 
     @NotNull(message = "{vitals.patient.notnull}", groups = OnCreate.class)
     private String patientNatId;

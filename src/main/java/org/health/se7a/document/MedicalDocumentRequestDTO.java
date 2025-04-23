@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MedicalDocumentRequestDTO {
+    private Long id;
 
     @NotNull(message = "{document.file.notnull}", groups = OnCreate.class)
     private MultipartFile file;

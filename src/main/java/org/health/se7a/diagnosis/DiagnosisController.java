@@ -31,7 +31,7 @@ public class DiagnosisController {
     public XppResponseEntity<Boolean> updateDiagnosis(
             @PathVariable Long id,
             @RequestBody @Validated(OnUpdate.class) DiagnosisDTO dto) {
-        dto.setId(id); // Set the ID for update
+        dto.setId(id);
         Boolean updated = diagnosisService.updateDiagnosis(dto);
         return XppResponseEntity.map(updated);
     }

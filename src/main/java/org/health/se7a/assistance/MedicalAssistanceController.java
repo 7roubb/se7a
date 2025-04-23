@@ -57,7 +57,8 @@ public class MedicalAssistanceController {
     @PreAuthorize("@authorizationService.loggedInUserIsNurse()")
     public XppResponseEntity<Boolean> updateAssistance(@PathVariable Long id,
                                                        @RequestBody @Validated(OnUpdate.class) MedicalAssistanceDTO dto) {
-        return XppResponseEntity.map(assistanceService.UpdateAssistance(id, dto));
+        dto.setId(id);
+        return XppResponseEntity.map(assistanceService.UpdateAssistance(dto));
     }
 
 

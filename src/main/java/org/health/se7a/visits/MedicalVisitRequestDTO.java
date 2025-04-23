@@ -12,6 +12,7 @@ import org.health.se7a.common.OnCreate;
 @Builder
 public class MedicalVisitRequestDTO {
 
+    private Long id;
     @NotNull(message = "{medicalvisit.visitReason.notnull}", groups = OnCreate.class)
     @Size(min = 2, max = 255, message = "{medicalvisit.visitReason.size}", groups = OnCreate.class)
     private String visitReason;

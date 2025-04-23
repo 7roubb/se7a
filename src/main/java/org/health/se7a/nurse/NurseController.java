@@ -42,7 +42,8 @@ public class NurseController {
     public XppResponseEntity<Boolean> updateNurse(
             @PathVariable Long id,
             @RequestBody  @Validated(OnUpdate.class) NurseDTO nurseDTO) {
-        Boolean updatedNurse = nurseService.updateNurse(id, nurseDTO);
+        nurseDTO.setId(id);
+        Boolean updatedNurse = nurseService.updateNurse(nurseDTO);
         return XppResponseEntity.map(updatedNurse);
     }
 

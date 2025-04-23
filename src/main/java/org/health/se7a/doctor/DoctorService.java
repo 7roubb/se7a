@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface DoctorService {
     Boolean createDoctor(DoctorDTO doctorDTO);
-    Boolean  updateDoctor(Long id, DoctorDTO doctorDTO);
+    Boolean  updateDoctor(DoctorDTO doctorDTO);
     DoctorDTO getDoctorById(Long id);
     Page<DoctorDTO> getAllDoctors(Pageable page);
     List<DoctorLookupDTO> getAllDoctorsForLookup();

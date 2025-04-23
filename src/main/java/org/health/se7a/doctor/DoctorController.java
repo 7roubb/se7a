@@ -43,7 +43,8 @@ public class DoctorController {
     public XppResponseEntity<Boolean> updateDoctor(
             @PathVariable Long id,
             @RequestBody  @Validated(OnUpdate.class) DoctorDTO doctorDTO) {
-        Boolean updatedDoctor = doctorService.updateDoctor(id, doctorDTO);
+        doctorDTO.setId(id);
+        Boolean updatedDoctor = doctorService.updateDoctor(doctorDTO);
         return XppResponseEntity.map(updatedDoctor);
     }
     @GetMapping("/lookup")

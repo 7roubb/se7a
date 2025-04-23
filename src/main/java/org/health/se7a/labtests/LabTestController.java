@@ -33,7 +33,8 @@ public class LabTestController {
     public XppResponseEntity<Boolean> updateLabTest(
             @PathVariable Long id,
             @RequestBody @Validated(OnUpdate.class) LabTestDTO labTestDTO) {
-        return XppResponseEntity.map(labTestService.updateLabTest(id, labTestDTO));
+        labTestDTO.setId(id);
+        return XppResponseEntity.map(labTestService.updateLabTest(labTestDTO));
     }
 
     @DeleteMapping("/{id}")

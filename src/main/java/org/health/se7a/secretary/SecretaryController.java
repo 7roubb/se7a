@@ -41,7 +41,8 @@ public class SecretaryController {
     public XppResponseEntity<Boolean> updateSecretary(
             @PathVariable Long id,
             @RequestBody @Validated(OnUpdate.class) SecretaryDTO secretaryDTO) {
-        Boolean updatedSecretary = secretaryService.updateSecretary(id, secretaryDTO);
+        secretaryDTO.setId(id);
+        Boolean updatedSecretary = secretaryService.updateSecretary(secretaryDTO);
         return XppResponseEntity.map(updatedSecretary);
     }
 

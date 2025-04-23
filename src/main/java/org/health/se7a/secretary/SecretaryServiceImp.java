@@ -37,9 +37,9 @@ public class SecretaryServiceImp implements SecretaryService {
 
     @Override
     @Transactional
-    public Boolean updateSecretary(Long id, SecretaryDTO secretaryDTO) {
-        Secretary secretary = secretaryRepository.findById(id)
-                .orElseThrow(() -> notFoundException(id, "secretary.not.found"));
+    public Boolean updateSecretary(SecretaryDTO secretaryDTO) {
+        Secretary secretary = secretaryRepository.findById(secretaryDTO.getId())
+                .orElseThrow(() -> notFoundException(secretaryDTO.getId(), "secretary.not.found"));
 
         validatePhoneNumberUpdate(secretary, secretaryDTO.getTelNumber());
         updateSecretaryDetails(secretary, secretaryDTO);

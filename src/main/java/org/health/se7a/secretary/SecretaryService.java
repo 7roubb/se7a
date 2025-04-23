@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface SecretaryService {
     Boolean createSecretary(SecretaryDTO secretaryDTO);
-    Boolean updateSecretary(Long id,SecretaryDTO secretaryDTO);
+    Boolean updateSecretary(SecretaryDTO secretaryDTO);
     Boolean deleteSecretary(Long secretaryId);
     SecretaryDTO getSecretary(Long secretaryId);
     Page<SecretaryDTO> getAllSecretaries(Pageable pageable);

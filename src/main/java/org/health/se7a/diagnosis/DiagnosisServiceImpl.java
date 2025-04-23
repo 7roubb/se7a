@@ -49,9 +49,6 @@ public class DiagnosisServiceImpl implements DiagnosisService {
         Optional.ofNullable(dto.getDiagnosisDetails()).ifPresent(diagnosis::setDiagnosisDetails);
         Optional.ofNullable(dto.getNotes()).ifPresent(diagnosis::setNotes);
         Optional.ofNullable(dto.getRecordedAt()).ifPresent(diagnosis::setRecordedAt);
-        if (dto.getVisitId() != null) {
-            diagnosis.setVisit(getOptionalVisit(dto.getVisitId()));
-        }
 
         diagnosisRepository.save(diagnosis);
         return true;

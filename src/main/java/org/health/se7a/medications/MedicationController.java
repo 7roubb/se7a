@@ -34,7 +34,8 @@ public class MedicationController {
     public XppResponseEntity<Boolean> updateMedication(
             @PathVariable Long id,
             @RequestBody @Validated(OnUpdate.class) MedicationDTO medicationDTO) {
-        return XppResponseEntity.map(medicationService.updateMedication(id, medicationDTO));
+        medicationDTO.setId(id);
+        return XppResponseEntity.map(medicationService.updateMedication(medicationDTO));
     }
 
     @DeleteMapping("/{id}")

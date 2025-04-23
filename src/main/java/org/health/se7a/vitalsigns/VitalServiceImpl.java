@@ -30,9 +30,9 @@ public class VitalServiceImpl implements VitalService {
 
     @Override
     @Transactional
-    public Boolean updateVitalSigns(Long id ,VitalSignsDTO vitalSignsDTO) {
-        VitalSigns existingVitalSigns = vitalSignsRepository.findById(id)
-                .orElseThrow(() -> notFoundException(id, "vitalSigns.not.found"));
+    public Boolean updateVitalSigns(VitalSignsDTO vitalSignsDTO) {
+        VitalSigns existingVitalSigns = vitalSignsRepository.findById(vitalSignsDTO.getId())
+                .orElseThrow(() -> notFoundException(vitalSignsDTO.getId(), "vitalSigns.not.found"));
         updateVitalDetails(existingVitalSigns, vitalSignsDTO);
         vitalSignsRepository.save(existingVitalSigns);
         return true;

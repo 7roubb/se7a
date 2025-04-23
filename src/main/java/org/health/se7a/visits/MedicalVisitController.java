@@ -48,8 +48,9 @@ public class MedicalVisitController {
     public XppResponseEntity<Boolean> updateMedicalVisit(
             @PathVariable Long id,
             @RequestBody @Validated(OnUpdate.class) MedicalVisitRequestDTO dto) {
+        dto.setId(id);
         return XppResponseEntity.map(
-                medicalVisitService.updateMedicalVisit(id, dto)
+                medicalVisitService.updateMedicalVisit(dto)
         );
     }
 

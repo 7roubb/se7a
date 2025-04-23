@@ -51,9 +51,9 @@ public class MedicalVisitServiceImpl implements MedicalVisitService {
 
     @Override
     @Transactional
-    public Boolean updateMedicalVisit(Long id, MedicalVisitRequestDTO dto) {
-        MedicalVisit existing = medicalVisitRepository.findById(id)
-                .orElseThrow(() -> notFoundException(id, "medical.visit.not.found"));
+    public Boolean updateMedicalVisit(MedicalVisitRequestDTO dto) {
+        MedicalVisit existing = medicalVisitRepository.findById(dto.getId())
+                .orElseThrow(() -> notFoundException(dto.getId(), "medical.visit.not.found"));
         Optional.ofNullable(dto.getVisitReason()).ifPresent(existing::setVisitReason);
         Optional.ofNullable(dto.getNotes()).ifPresent(existing::setNotes);
         Optional.ofNullable(dto.getVisitDate())
