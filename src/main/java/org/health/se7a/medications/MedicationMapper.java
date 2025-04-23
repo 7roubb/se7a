@@ -16,6 +16,7 @@ public class MedicationMapper {
                 .map(m -> MedicationResponseDTO.builder()
                         .id(m.getId())
                         .drugName(m.getDrugName())
+                        .patient(PatientMapper.toDto(m.getPatient()))
                         .dosage(m.getDosage())
                         .nurse(NurseMapper.toDto(m.getNurse()))
                         .administrationMethod(m.getAdministrationMethod())

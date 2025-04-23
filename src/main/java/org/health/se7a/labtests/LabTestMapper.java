@@ -19,6 +19,7 @@ public class LabTestMapper {
                 .map(l -> LabTestResponseDTO.builder()
                         .id(l.getId())
                         .testName(l.getTestName())
+                        .patient(PatientMapper.toDto(l.getPatient()))
                         .result(l.getResult())
                         .testDate(l.getTestDate())
                         .nurse(NurseMapper.toDto(l.getNurse()))

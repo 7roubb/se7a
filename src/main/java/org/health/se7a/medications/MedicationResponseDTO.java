@@ -22,4 +22,5 @@ public class MedicationResponseDTO {
     private String administrationMethod;
     private LocalDateTime administeredAt;
     private NurseDTO nurse;
+    private PatientResponseDTO patient;
 }

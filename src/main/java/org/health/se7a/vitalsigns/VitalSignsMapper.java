@@ -1,6 +1,7 @@
 package org.health.se7a.vitalsigns;
 
 import org.health.se7a.nurse.NurseMapper;
+import org.health.se7a.patients.PatientMapper;
 import org.health.se7a.patients.Patients;
 import org.health.se7a.nurse.Nurse;
 
@@ -13,8 +14,10 @@ public class VitalSignsMapper {
     public static VitalSignsResponseDTO toDto(VitalSigns vitalSigns) {
         return Optional.ofNullable(vitalSigns)
                 .map(v -> VitalSignsResponseDTO.builder()
+                        .id(v.getId())
                         .bloodPressure(v.getBloodPressure())
                         .heartRate(v.getHeartRate())
+                        .patient(PatientMapper.toDto(v.getPatient()))
                         .nurse(NurseMapper.toDto(v.getNurse()))
                         .temperature(v.getTemperature())
                         .respiratoryRate(v.getRespiratoryRate())

@@ -21,6 +21,8 @@ public class VitalSignsResponseDTO {
 
     private NurseDTO nurse;
 
+    private PatientResponseDTO patient;
+
     private Double bloodPressure;
     private Integer heartRate;
     private Double temperature;
