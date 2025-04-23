@@ -13,7 +13,7 @@ public class StatisticsController {
 
     private final StatisticsService statisticsService;
 
-    @PostMapping
+    @GetMapping
     @PreAuthorize("@authorizationService.loggedInUserIsSecretary()")
     public XppResponseEntity<StatisticsResponseDTO> getStats(@RequestBody @Validated StatisticsRequestDTO dto) {
         StatisticsResponseDTO stats = statisticsService.generateAdvancedStats(dto);

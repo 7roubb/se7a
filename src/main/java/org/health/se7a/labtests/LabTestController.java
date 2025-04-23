@@ -42,12 +42,12 @@ public class LabTestController {
         return XppResponseEntity.map(labTestService.deleteLabTest(id));
     }
 
-    @GetMapping("/patient/{patientNatId}")
+    @GetMapping("/by-patient/{patientNatId}")
     public XppResponseEntity<Page<LabTestResponseDTO>> getLabTestsByPatient(@PathVariable String patientNatId, Pageable pageable) {
         return XppResponseEntity.map(labTestService.getLabTestsByPatientNatId(patientNatId, pageable));
     }
 
-    @GetMapping("/nurse")
+    @GetMapping("/by-nurse")
     @PreAuthorize("@authorizationService.loggedInUserIsNurse()")
     public XppResponseEntity<Page<LabTestResponseDTO>> getLabTestsByLoggedInNurse(Pageable pageable) {
         return XppResponseEntity.map(labTestService.getByNurse(pageable));

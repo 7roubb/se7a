@@ -43,12 +43,12 @@ public class MedicationController {
         return XppResponseEntity.map(medicationService.deleteMedication(id));
     }
 
-    @GetMapping("/patient/{patientNatId}")
+    @GetMapping("/by-patient/{patientNatId}")
     public XppResponseEntity<Page<MedicationResponseDTO>> getMedicationsByPatient(@PathVariable String patientNatId, Pageable pageable) {
         return XppResponseEntity.map(medicationService.getMedicationByPatientNatId(patientNatId, pageable));
     }
 
-    @GetMapping("/nurse")
+    @GetMapping("/by-nurse")
     @PreAuthorize("@authorizationService.loggedInUserIsNurse()")
     public XppResponseEntity<Page<MedicationResponseDTO>> getMedicationsByLoggedInNurse(Pageable pageable) {
         return XppResponseEntity.map(medicationService.getMedicationByNurse(pageable));

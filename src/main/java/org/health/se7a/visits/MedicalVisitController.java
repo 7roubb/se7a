@@ -17,7 +17,7 @@ public class MedicalVisitController {
 
     private final MedicalVisitService medicalVisitService;
 
-    @GetMapping("/patient/{patientNatId}")
+    @GetMapping("/by-patient/{patientNatId}")
     public XppResponseEntity<Page<MedicalVisitResponseDTO>> getMedicalVisitsByPatient(
             @PathVariable String patientNatId,
             Pageable pageable) {
@@ -44,7 +44,7 @@ public class MedicalVisitController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("@authorizationService.loggedInUserIsDoctor()")
+    @PreAuthorize("@authorizationService.loggedInUserIsSecretary()")
     public XppResponseEntity<Boolean> updateMedicalVisit(
             @PathVariable Long id,
             @RequestBody @Validated(OnUpdate.class) MedicalVisitRequestDTO dto) {
@@ -54,7 +54,7 @@ public class MedicalVisitController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("@authorizationService.loggedInUserIsDoctor()")
+    @PreAuthorize("@authorizationService.loggedInUserIsSecretary()")
     public XppResponseEntity<Boolean> deleteMedicalVisit(
             @PathVariable Long id) {
         return XppResponseEntity.map(

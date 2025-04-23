@@ -17,10 +17,10 @@ public class DiagnosisController {
 
     private final DiagnosisService diagnosisService;
 
-    @PostMapping("/visit/{visitId}")
+    @PostMapping()
     @PreAuthorize("@authorizationService.loggedInUserIsDoctor()")
     public XppResponseEntity<Boolean> createDiagnosis(
-            @PathVariable Long visitId,
+            @RequestParam Long visitId,
             @RequestBody @Validated(OnCreate.class) DiagnosisDTO dto) {
         Boolean created = diagnosisService.createDiagnosis(visitId, dto);
         return XppResponseEntity.map(created);

@@ -4,7 +4,6 @@ import org.health.se7a.common.OnCreate;
 import org.health.se7a.common.OnUpdate;
 import org.health.se7a.common.XppResponseEntity;
 import lombok.RequiredArgsConstructor;
-import org.health.se7a.medications.MedicationDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,7 +28,7 @@ public class PatientController {
         return XppResponseEntity.map(patientService.getPatient(id));
     }
 
-    @GetMapping("/id/{natId}")
+    @GetMapping("/by-natId/{natId}")
     public XppResponseEntity<PatientResponseDTO> getPatientById(@PathVariable String natId) {
         return XppResponseEntity.map(patientService.getPatient(natId));
     }

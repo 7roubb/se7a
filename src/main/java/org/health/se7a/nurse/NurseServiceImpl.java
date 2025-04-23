@@ -54,7 +54,9 @@ public class NurseServiceImpl implements NurseService {
         Nurse existingNurse = nurseRepository.findById(id)
                 .orElseThrow(() -> notFoundException(id, "nurse.not.found"));
         validatePhoneNumberUpdate(existingNurse, nurseDTO.getTelNumber());
+
         updateNurseDetails(existingNurse, nurseDTO);
+
 
         return true;
     }
@@ -71,6 +73,16 @@ public class NurseServiceImpl implements NurseService {
     }
 
     private void updateNurseDetails(Nurse nurse, NurseDTO nurseDTO) {
+        String oldPhoneNumber = nurse.getTelNumber();
+        String newPhoneNumber = nurseDTO.getTelNumber();
+
+        Optional.ofNullable(nurseDTO.getName()).ifPresent(nurse::setName);
+        Optional.ofNullable(newPhoneNumber).ifPresent(nurse::setTelNumber);
+
+        // Update user login info if phone number changed
+        if (newPhoneNumber != null && !newPhoneNumber.equals(oldPhoneNumber)) {
+            entityService.updateUserLoginInfoPhone(oldPhoneNumber, newPhoneNumber);
+        }
         Optional.ofNullable(nurseDTO.getName()).ifPresent(nurse::setName);
         Optional.ofNullable(nurseDTO.getTelNumber()).ifPresent(nurse::setTelNumber);
         nurseRepository.save(nurse);

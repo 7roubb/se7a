@@ -51,7 +51,8 @@ public class AdminService {
     }
 
 
-    public void setAccountStatus(String phoneNumber, LoginType loginType, AccountStatus accountStatus) {
+    public void setAccountStatus(String phoneNumber,LoginType loginType,AccountStatus accountStatus) {
+        System.out.println(loginType);
         UserRepository repository = loginDetailsService.getRepositoryByLoginType(loginType);
         LoginUser user = repository.findByTelNumber(phoneNumber)
                 .orElseThrow(() -> new XppException(List.of(phoneNumber),
@@ -59,6 +60,7 @@ public class AdminService {
                         "user.not.found"
                 ));
         user.setAccountStatus(accountStatus);
+        System.out.println(user.getType());
         if (user.getType() == LoginType.DOCTOR) {
             ((DoctorRepository) repository).save((Doctor) user);
         } else if (user.getType() == LoginType.NURSE) {

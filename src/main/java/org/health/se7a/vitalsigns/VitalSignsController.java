@@ -18,12 +18,12 @@ public class VitalSignsController {
 
     private final VitalService vitalService;
 
-    @GetMapping("/patient/{patientNatId}")
+    @GetMapping("/by-patient/{patientNatId}")
     public XppResponseEntity<Page<VitalSignsResponseDTO>> getVitalSignsByPatient(@PathVariable String patientNatId, Pageable pageable) {
         return XppResponseEntity.map(vitalService.getVitalSignsByPatient(patientNatId, pageable));
     }
 
-    @GetMapping("/nurse/{nurseId}")
+    @GetMapping("/by-nurse/{nurseId}")
     @PreAuthorize("@authorizationService.userCanViewNurseDetails(#nurseId)")
     public XppResponseEntity<Page<VitalSignsResponseDTO>> getVitalSignsByNurse(@PathVariable Long nurseId, Pageable pageable) {
         return XppResponseEntity.map(vitalService.getVitalSignsDTOByNurse(nurseId, pageable));

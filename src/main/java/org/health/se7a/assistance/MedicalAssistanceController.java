@@ -30,19 +30,19 @@ public class MedicalAssistanceController {
         return XppResponseEntity.map(assistanceService.GetMedicalAssistance(id));
     }
 
-    @GetMapping("/nurse/{nurseId}")
+    @GetMapping("/by-nurse/{nurseId}")
     @PreAuthorize("@authorizationService.loggedInUserIsAdminOrNurse()")
     public XppResponseEntity<Page<MedicalAssistanceResponseDTO>> getByNurse(Pageable pageable, @PathVariable Long nurseId) {
         return XppResponseEntity.map(assistanceService.GetMedicalAssistanceByNurse(pageable, nurseId));
     }
 
-    @GetMapping("/doctor/{doctorId}")
+    @GetMapping("/by-doctor/{doctorId}")
     @PreAuthorize("@authorizationService.loggedInUserIsAdminOrNurse()")
     public XppResponseEntity<Page<MedicalAssistanceResponseDTO>> getByDoctor(Pageable pageable, @PathVariable Long doctorId) {
         return XppResponseEntity.map(assistanceService.GetMedicalAssistanceByDoctor(pageable, doctorId));
     }
 
-    @GetMapping("/patient/{patientNatId}")
+    @GetMapping("/by-patient/{patientNatId}")
     @PreAuthorize("@authorizationService.loggedInUserIsAdminOrNurse()")
     public XppResponseEntity<Page<MedicalAssistanceResponseDTO>> getByPatient(Pageable pageable, @PathVariable String patientNatId) {
         return XppResponseEntity.map(assistanceService.GetMedicalAssistanceByPatient(pageable, patientNatId));

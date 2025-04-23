@@ -1,11 +1,13 @@
 package org.health.se7a.admin;
 
+import jakarta.validation.Valid;
 import org.health.se7a.common.XppResponseEntity;
 import org.health.se7a.security.model.AccountStatus;
 import org.health.se7a.security.model.LoginRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,8 +19,8 @@ public class AdminController {
 
     @PostMapping("/account/status")
     @PreAuthorize("@authorizationService.loggedInUserIsAdmin()")
-    public XppResponseEntity<Void> getCarByPlateNumber(@RequestParam AccountStatus st, @RequestBody LoginRequest user) {
-       adminService.setAccountStatus(user.getPhoneNumber(),null,st);
+    public XppResponseEntity<Void> getCarByPlateNumber(@RequestBody @Validated StatusDTO statusDTO ) {
+       adminService.setAccountStatus(statusDTO.getPhoneNumber(),statusDTO.getType(),statusDTO.getStatus());
         return XppResponseEntity.map(HttpStatus.OK);
     }
 }

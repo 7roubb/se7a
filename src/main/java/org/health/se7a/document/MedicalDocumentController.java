@@ -47,11 +47,11 @@ public class MedicalDocumentController {
         return XppResponseEntity.map(documentService.getDocumentById(id));
     }
 
-    @GetMapping("/patient/{natId}")
+    @GetMapping("/by-patient/{patientNatId}")
     public XppResponseEntity<Page<MedicalDocumentResponseDTO>> getDocumentsByPatientNatId(
             Pageable pageable,
-            @PathVariable String natId
+            @PathVariable String patientNatId
     ) {
-        return XppResponseEntity.map(documentService.getDocumentByPatientNatId(natId, pageable));
+        return XppResponseEntity.map(documentService.getDocumentByPatientNatId(patientNatId, pageable));
     }
 }

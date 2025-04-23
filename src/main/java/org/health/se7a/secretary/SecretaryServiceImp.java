@@ -96,6 +96,17 @@ public class SecretaryServiceImp implements SecretaryService {
     }
 
     private void updateSecretaryDetails(Secretary secretary, SecretaryDTO secretaryDTO) {
+
+        String oldPhoneNumber = secretary.getTelNumber();
+        String newPhoneNumber = secretaryDTO.getTelNumber();
+
+        Optional.ofNullable(secretaryDTO.getName()).ifPresent(secretary::setName);
+        Optional.ofNullable(newPhoneNumber).ifPresent(secretary::setTelNumber);
+
+        if (newPhoneNumber != null && !newPhoneNumber.equals(oldPhoneNumber)) {
+            entityService.updateUserLoginInfoPhone(oldPhoneNumber, newPhoneNumber);
+        }
+
         Optional.ofNullable(secretaryDTO.getName()).ifPresent(secretary::setName);
         Optional.ofNullable(secretaryDTO.getTelNumber()).ifPresent(secretary::setTelNumber);
         secretary.setUpdatedAt(LocalDateTime.now());
