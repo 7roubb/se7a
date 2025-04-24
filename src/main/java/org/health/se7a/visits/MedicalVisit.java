@@ -54,4 +54,6 @@ public class MedicalVisit {
 
     @OneToMany(mappedBy = "visit", cascade = CascadeType.ALL)
     private List<MedicalDocument> documents;
+
+    private LocalDateTime visitTime;
 }

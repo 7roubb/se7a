@@ -23,8 +23,6 @@ public class PrescriptionRequestDTO {
     @Size(max = 1000, message = "{prescription.instructions.size}")
     private String instructions;
 
-    @NotNull(message = "{prescription.visitId.notNull}")
-    private Long visitId;
 
     private String patientNatId;
 }

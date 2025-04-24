@@ -8,14 +8,18 @@ import org.health.se7a.security.model.AccountStatus;
 import org.health.se7a.security.model.LoginType;
 import org.health.se7a.security.util.SecurityContextUtil;
 import org.health.se7a.users.UserRepo;
+import org.health.se7a.visits.MedicalVisit;
+import org.health.se7a.visits.MedicalVisitRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -26,6 +30,7 @@ public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepository doctorRepository;
     private final EntityService entityService;
     private final UserRepo userRepo;
+    private final MedicalVisitRepository medicalVisitRepository;
 
     @Override
     public Boolean createDoctor(DoctorDTO doctorDTO) {
@@ -122,6 +127,23 @@ public class DoctorServiceImpl implements DoctorService {
         Optional.ofNullable(doctorDTO.getSpecialty()).ifPresent(doctor::setSpecialty);
         doctor.setUpdatedAt(LocalDateTime.now());
         doctorRepository.save(doctor);
+    }
+
+    public Map<String, String> getAllVisitsToday() {
+        LocalDate today = LocalDate.now();
+        LocalDateTime startOfDay = today.atTime(6, 0);   // 6:00 AM
+        LocalDateTime endOfDay = today.atTime(23, 59);   // 11:59 PM
+
+        List<MedicalVisit> visits = medicalVisitRepository.findVisitsByDoctorAndDayRange(
+                getDoctor().getId(), startOfDay, endOfDay, Pageable.unpaged()
+        ).getContent();
+        return visits.stream()
+                .filter(visit -> visit.getPatients() != null)
+                .collect(Collectors.toMap(
+                        visit -> visit.getPatients().getNationalityID(),
+                        visit -> visit.getPatients().getName(),
+                        (existing, replacement) -> existing
+                ));
     }
 
     private Long loggedInUserId() {

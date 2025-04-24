@@ -45,6 +45,7 @@ public class MedicalVisitServiceImpl implements MedicalVisitService {
         Doctor doctor = DoctorMapper.toEntity(doctorService.getDoctorById(dto.getDoctorId()));
         MedicalVisit visit = MedicalVisitMapper.toEntity(dto, doctor, patient);
         visit.setVisitDate(LocalDateTime.parse(dto.getVisitDate()));
+        visit.setVisitTime(LocalDateTime.now());
         medicalVisitRepository.save(visit);
         return visit.getId();
     }

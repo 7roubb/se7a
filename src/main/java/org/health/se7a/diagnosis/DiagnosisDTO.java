@@ -25,7 +25,6 @@ public class DiagnosisDTO {
     @Size(max = 1000, message = "{diagnosis.notes.size}", groups = OnCreate.class)
     private String notes;
 
-    @NotNull(message = "{diagnosis.recordedAt.notnull}", groups = OnCreate.class)
     private LocalDateTime recordedAt;
 
 }

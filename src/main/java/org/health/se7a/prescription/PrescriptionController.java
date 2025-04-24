@@ -22,7 +22,7 @@ public class PrescriptionController {
     public XppResponseEntity<Boolean> createPrescription(
             @RequestParam Long visitId,
             @RequestBody @Validated(OnCreate.class) PrescriptionRequestDTO dto) {
-        Boolean created = prescriptionService.createPrescription(visitId,dto);
+        Boolean created = prescriptionService.createPrescription(visitId, dto);
         return XppResponseEntity.map(created);
     }
 
@@ -54,5 +54,21 @@ public class PrescriptionController {
             @PathVariable Long visitId,
             Pageable pageable) {
         return XppResponseEntity.map(prescriptionService.getPrescriptionsByVisitId(visitId, pageable));
+    }
+
+    @GetMapping("/by-patient/{patientNatId}")
+    @PreAuthorize("@authorizationService.loggedInUserIsAdminOrDoctor()")
+    public XppResponseEntity<Page<PrescriptionResponseDTO>> getPrescriptionsByPatientId(
+            @PathVariable String patientNatId,
+            Pageable pageable) {
+        return XppResponseEntity.map(prescriptionService.getPrescriptionByPatientId(patientNatId, pageable));
+    }
+
+    @GetMapping("/by-doctor/{doctorId}")
+    @PreAuthorize("@authorizationService.userCanViewDoctorDetails(#doctorId)")
+    public XppResponseEntity<Page<PrescriptionResponseDTO>> getPrescriptionsByDoctorId(
+            @PathVariable Long doctorId,
+            Pageable pageable) {
+        return XppResponseEntity.map(prescriptionService.getPrescriptionByDoctorId(doctorId, pageable));
     }
 }

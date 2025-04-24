@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/doctors")
@@ -50,6 +51,13 @@ public class DoctorController {
     @GetMapping("/lookup")
     public XppResponseEntity<List<DoctorLookupDTO>> getDoctorLookup() {
         return XppResponseEntity.map(doctorService.getAllDoctorsForLookup());
+    }
+
+    @GetMapping("/today")
+    @PreAuthorize("@authorizationService.loggedInUserIsDoctor()")
+    public XppResponseEntity<Map<String, String>> getAllVisitsToday() {
+        Map<String, String> visitsToday = doctorService.getAllVisitsToday();
+        return XppResponseEntity.map(visitsToday);
     }
 
 }
