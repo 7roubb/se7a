@@ -35,6 +35,9 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     public Boolean createDiagnosis(Long id,DiagnosisDTO dto) {
         Patients patient = patientService.getPatientByNatId(dto.getPatientNatId());
         Doctor doctor = doctorService.getDoctor();
+        if (!patient.getDoctors().contains(doctor)) {
+            patient.getDoctors().add(doctor);
+        }
         MedicalVisit visit = getOptionalVisit(id);
         Diagnosis diagnosis = DiagnosisMapper.toEntity(dto, patient, doctor, visit);
         diagnosisRepository.save(diagnosis);

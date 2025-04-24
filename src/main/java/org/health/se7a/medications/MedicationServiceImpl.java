@@ -31,6 +31,9 @@ public class MedicationServiceImpl implements MedicationService {
     public Boolean addMedication(Long visitId,MedicationDTO medicationDTO) {
         Patients patient = patientService.getPatientByNatId(medicationDTO.getPatientNatId());
         Nurse nurse = nurseService.getNurse();
+        if (!patient.getNurses().contains(nurse)) {
+            patient.getNurses().add(nurse);
+        }
         Medication medication = MedicationMapper.toEntity(medicationDTO,patient,nurse);
         medication.setAdministeredAt(LocalDateTime.now());
         medication.setVisit(medicalVisitService.getMedicalVisitById(visitId));

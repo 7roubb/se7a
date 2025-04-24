@@ -31,6 +31,9 @@ public class LabTestServiceImpl implements LabTestService {
     public Boolean createLabTest(Long visitId,LabTestDTO labTestDTO) {
         Patients patient = patientService.getPatientByNatId(labTestDTO.getPatientNatId());
         Nurse nurse = nurseService.getNurse();
+        if (!patient.getNurses().contains(nurse)) {
+            patient.getNurses().add(nurse);
+        }
         LabTest labTest = LabTestMapper.toEntity(labTestDTO, patient);
         labTest.setTestDate(LocalDateTime.now());
         labTest.setNurse(nurse);
