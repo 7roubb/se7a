@@ -15,6 +15,16 @@ services:
     networks:
       - se7a-network
 
+  app:
+    build: .
+    container_name: se7a-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - se7a-network
+
 volumes:
   db-data:
     driver: local

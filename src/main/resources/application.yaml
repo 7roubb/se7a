@@ -20,7 +20,7 @@ spring:
   datasource:
     name: accounting
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/se7a
+    url: jdbc:postgresql://db:5432/se7a
     username: se7a
     password: root
   data:
