@@ -41,7 +41,7 @@ public class SecurityConfig {
 
         return http.csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/login", "/register/**", "/swagger-ui/**", "/v2/api-docs/**", "/swagger-resources/**", "/webjars/**","/swagger-ui.html","/favicon.ico")
+                        .requestMatchers("/login", "/register/**", "/swagger-ui/**", "/v2/api-docs/**", "/medical-visits/by-patient/**")
                         .permitAll()
                         .anyRequest().authenticated()
                 )

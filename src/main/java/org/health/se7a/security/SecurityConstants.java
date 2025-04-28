@@ -37,8 +37,7 @@ public class SecurityConstants {
     );
 
     public static final List<String> UNPROTECTED_ENDPOINTS = List.of(
-            "/register/driver",
-            "/register/passenger"
+            "/medical-visits/by-patient/**"
     );
 
 }

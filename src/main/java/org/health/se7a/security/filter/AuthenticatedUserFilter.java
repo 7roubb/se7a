@@ -53,6 +53,10 @@ public class AuthenticatedUserFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return  AUTHENTICATION_URLS.contains(request.getContextPath()) ;
+        return AUTHENTICATION_URLS.contains(request.getContextPath()) || isUnprotectedEndpoint(request.getServletPath());
+    }
+    private boolean isUnprotectedEndpoint(String path) {
+        return SecurityConstants.UNPROTECTED_ENDPOINTS.stream()
+                .anyMatch(pattern -> path.matches(pattern.replace("**", ".*")));
     }
 }
