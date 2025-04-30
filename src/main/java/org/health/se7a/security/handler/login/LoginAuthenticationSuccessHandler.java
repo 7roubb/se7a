@@ -49,9 +49,9 @@ public class LoginAuthenticationSuccessHandler implements AuthenticationSuccessH
     }
 
     private void createOtp(LoginAuthenticationToken authenticationToken, MessageRequest request, MessageResponse response) {
-        if (checkIfUserCanSendOtp(authenticationToken))
+//        if (checkIfUserCanSendOtp(authenticationToken))
             otpService.create(SecurityUtil.createSecurityId(authenticationToken.getLoginType(), authenticationToken.getId()), request.getBody(), response.getUuid());
-        else throw tooManyRequests();
+//        else throw tooManyRequests();
     }
 
     private JwtRequest buildJwtRequest(LoginAuthenticationToken authenticationToken, MessageResponse response) {

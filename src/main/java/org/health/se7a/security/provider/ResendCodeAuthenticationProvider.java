@@ -27,8 +27,8 @@ public class ResendCodeAuthenticationProvider implements AuthenticationProvider 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         ResendCodeAuthenticationToken authenticationToken = (ResendCodeAuthenticationToken) authentication;
-        if (!checkUserCanGenerateCodes(authenticationToken))
-            throw tooManyRequests();
+//        if (!checkUserCanGenerateCodes(authenticationToken))
+//            throw tooManyRequests();
         LoginUser user = findRepositoryByType(((ResendCodeAuthenticationToken) authentication).getLoginType())
                 .loadById(extractLoginIdFromUserId(authentication.getName()))
                 .orElseThrow(() -> new XppAuthenticationException("user.not.found"));
