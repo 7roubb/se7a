@@ -1,6 +1,7 @@
 package org.health.se7a.secretary;
 
 import org.health.se7a.security.UserRepository;
+import org.health.se7a.security.model.AccountStatus;
 import org.health.se7a.security.model.LoginType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -18,4 +19,6 @@ public interface SecretaryRepository extends JpaRepository<Secretary, Long>, Use
     default Optional<Secretary> loadById(Long id) {
         return findById(id);
     }
+    Long countByAccountStatus(AccountStatus accountStatus);
+
 }

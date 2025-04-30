@@ -23,4 +23,8 @@ public class AdminController {
        adminService.setAccountStatus(statusDTO.getPhoneNumber(),statusDTO.getType(),statusDTO.getStatus());
         return XppResponseEntity.map(HttpStatus.OK);
     }
+    @GetMapping("/stat")
+    public SystemStatsDTO getSystemStats() {
+        return adminService.getSystemStatistics();
+    }
 }

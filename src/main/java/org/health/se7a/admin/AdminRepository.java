@@ -1,6 +1,7 @@
 package org.health.se7a.admin;
 
 import org.health.se7a.security.UserRepository;
+import org.health.se7a.security.model.AccountStatus;
 import org.health.se7a.security.model.LoginType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -23,6 +24,6 @@ public interface AdminRepository extends JpaRepository<Admin, Long>, UserReposit
 
     Boolean existsByTelNumber(String telNumber);
 
-
+    Long countByAccountStatus(AccountStatus accountStatus);
 
 }

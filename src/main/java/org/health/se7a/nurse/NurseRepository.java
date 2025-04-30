@@ -1,6 +1,7 @@
 package org.health.se7a.nurse;
 
 import org.health.se7a.security.UserRepository;
+import org.health.se7a.security.model.AccountStatus;
 import org.health.se7a.security.model.LoginType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -19,6 +20,8 @@ public interface NurseRepository extends JpaRepository<Nurse, Long> , UserReposi
     default Optional<Nurse> loadById(Long id) {
         return findById(id);
     }
+    Long countByAccountStatus(AccountStatus accountStatus);
+
 
 
 }

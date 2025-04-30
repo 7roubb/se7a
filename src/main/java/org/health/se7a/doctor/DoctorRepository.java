@@ -1,6 +1,7 @@
 package org.health.se7a.doctor;
 
 import org.health.se7a.security.UserRepository;
+import org.health.se7a.security.model.AccountStatus;
 import org.health.se7a.security.model.LoginType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -20,4 +21,5 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> , UserRepo
     }
 
     Boolean existsByTelNumber(String telNumber);
+    Long countByAccountStatus(AccountStatus accountStatus);
 }
