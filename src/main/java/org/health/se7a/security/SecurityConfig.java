@@ -45,7 +45,7 @@ public class SecurityConfig {
                         .permitAll()
                         .anyRequest().authenticated()
                 )
-
+                .cors(Customizer.withDefaults())
                 .exceptionHandling(e -> e.accessDeniedHandler(new XppAccessDeniedHandler()))
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
