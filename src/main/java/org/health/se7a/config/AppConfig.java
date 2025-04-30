@@ -16,7 +16,8 @@ public class AppConfig {
                 registry.addMapping("/**")
                         .allowedOrigins("*")
                         .allowedMethods("*")
-                        .allowedHeaders("*");
+                        .allowedHeaders("*")
+                        .exposedHeaders("Authorization", "X-Auth-Token","accessToken","X-Token", "X-User-Role", "X-Custom-Info");;
             }
         };
     }
