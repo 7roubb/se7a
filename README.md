@@ -13,6 +13,14 @@ This is the backend service for the **Se7a Healthcare System**, built with **Spr
 
 ---
 
+## Technologies Used
+- **Spring Boot 6**: Backend framework
+- **Spring Data JPA**: For ORM with PostgreSQL
+- **PostgreSQL**: For storing user and task data
+- **Docker Compose**: To run PostgreSQL and Redis as services
+## Spring Security 6 Diagram:
+![image](https://github.com/user-attachments/assets/985357c9-a5c3-42a0-9263-aa4cfa2a1f37)
+
 ## 🔧 Build & Run
 
 ### 1. Build the Project
